@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Orenj · Paper Citrus Co. — The Orange Tree</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍊</text></svg>" />
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    padding:30px 18px;background:#e7d7bb;
+    font-family:"Nunito",system-ui,sans-serif;
+    background-image:
+      radial-gradient(60% 40% at 12% 0%, rgba(233,185,73,.35), transparent 70%),
+      radial-gradient(60% 50% at 92% 100%, rgba(46,139,139,.22), transparent 70%);
+  }
+
+  /* ---- the paper "card" the scene lives on ---- */
+  .scene{
+    position:relative;width:min(960px,100%);aspect-ratio:16/11;border-radius:30px;overflow:hidden;
+    background:#FBF1DE;
+    box-shadow:0 18px 0 -6px rgba(32,48,74,.12), 0 40px 60px rgba(32,48,74,.28),
+               inset 0 0 0 2px rgba(255,255,255,.5);
+  }
+  .scene svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+
+  /* riso halftone + paper grain, layered over everything */
+  .halftone{position:absolute;inset:0;pointer-events:none;z-index:8;mix-blend-mode:multiply;opacity:.4;
+    background-image:radial-gradient(rgba(192,73,43,.45) 22%, transparent 23%);
+    background-size:6px 6px;}
+  .grain{position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.06;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");}
+  .vignette{position:absolute;inset:0;pointer-events:none;z-index:7;
+    box-shadow:inset 0 0 120px rgba(120,70,20,.18);border-radius:30px}
+
+  /* ---- lesson tab (in-app context) ---- */
+  .tab{position:absolute;z-index:10;top:20px;left:20px;display:flex;align-items:center;gap:9px;
+    background:#FBF1DE;border-radius:14px;padding:9px 15px;
+    box-shadow:0 5px 0 -1px rgba(32,48,74,.16),0 12px 18px rgba(32,48,74,.18)}
+  .tab .em{font-size:20px}
+  .tab .t{font-family:"Baloo 2";font-weight:800;color:#20304A;font-size:16px;line-height:1}
+  .tab .d{font-family:"Baloo 2";font-weight:800;color:#E2622B;font-size:11px;letter-spacing:2px;margin-top:3px}
+  .credit{position:absolute;z-index:10;bottom:14px;right:18px;font-family:"Baloo 2";font-weight:700;
+    font-size:12px;color:#fff;opacity:.7;letter-spacing:.5px;text-shadow:0 1px 2px rgba(32,48,74,.4)}
+
+  /* ===================== ANIMATIONS =====================
+     Pattern: an OUTER <g transform="translate(...)"> positions the piece;
+     the INNER animated <g> only ever sets a CSS transform, so the two
+     never clash.  fill-box makes transforms pivot on the shape itself. */
+  .canopy,.orange,.fall-orange,.leaf-fall,.cloud,.sun,.sun-rays,
+  .pip-body,.butterfly,.bf-wing,.bird,.bird-wing,.grass,.eyelid{transform-box:fill-box}
+
+  .canopy{transform-origin:50% 94%;animation:sway 6.5s ease-in-out infinite alternate}
+  @keyframes sway{from{transform:rotate(-1.6deg)}to{transform:rotate(1.6deg)}}
+
+  .orange{transform-origin:50% 4%;animation:jiggle 3.4s ease-in-out infinite}
+  @keyframes jiggle{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(2.5px) rotate(2.5deg)}}
+
+  .sun{transform-origin:center;animation:sunpulse 5s ease-in-out infinite}
+  @keyframes sunpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  .sun-rays{transform-origin:center;animation:spin 80s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .cloud{animation:drift linear infinite}
+  @keyframes drift{from{transform:translateX(-280px)}to{transform:translateX(1040px)}}
+
+  .grass{transform-origin:50% 100%;animation:blade 4s ease-in-out infinite alternate}
+  @keyframes blade{from{transform:skewX(-6deg)}to{transform:skewX(6deg)}}
+
+  /* hero orange that detaches, drops, bounces, and resets */
+  .fall-orange{transform-origin:50% 50%;animation:falldrop 6s cubic-bezier(.5,.05,.6,1) infinite}
+  @keyframes falldrop{
+    0%,40%{transform:translateY(0) rotate(0);opacity:0}
+    41%{opacity:1}
+    60%{transform:translateY(322px) rotate(220deg);opacity:1}        /* hits ground */
+    64%{transform:translateY(304px) scale(1.16,.80) rotate(228deg)}  /* squash */
+    70%{transform:translateY(276px) scale(.95,1.06) rotate(238deg)}  /* rebound */
+    78%{transform:translateY(312px) scale(1.06,.92) rotate(246deg)}  /* settle */
+    86%,100%{transform:translateY(320px) rotate(250deg);opacity:1}
+  }
+
+  .leaf-fall{animation:leafdrift 7s linear infinite}
+  @keyframes leafdrift{
+    0%{transform:translate(0,0) rotate(0);opacity:0}
+    8%,90%{opacity:1}
+    100%{transform:translate(-120px,360px) rotate(420deg);opacity:0}
+  }
+
+  .butterfly{animation:flutter 9s ease-in-out infinite}
+  @keyframes flutter{
+    0%{transform:translate(0,0) rotate(-4deg)}
+    25%{transform:translate(120px,-40px) rotate(6deg)}
+    50%{transform:translate(240px,10px) rotate(-4deg)}
+    75%{transform:translate(120px,40px) rotate(6deg)}
+    100%{transform:translate(0,0) rotate(-4deg)}
+  }
+  .bf-wing{transform-origin:100% 50%;animation:flap .22s ease-in-out infinite alternate}
+  .bf-wing.r{transform-origin:0% 50%}
+  @keyframes flap{from{transform:scaleX(1)}to{transform:scaleX(.45)}}
+
+  .pip-body{transform-origin:50% 100%;animation:pipbob 3s ease-in-out infinite}
+  @keyframes pipbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  .eyelid{transform-origin:50% 50%;animation:blink 4.5s infinite}
+  @keyframes blink{0%,93%,100%{transform:scaleY(0)}96%{transform:scaleY(1)}}
+
+  .bird{animation:fly 24s linear infinite}
+  @keyframes fly{0%{transform:translate(1060px,0)}100%{transform:translate(-220px,-30px)}}
+  .bird-wing{transform-origin:0% 50%;animation:flap2 .5s ease-in-out infinite alternate}
+  @keyframes flap2{from{transform:rotate(-18deg)}to{transform:rotate(20deg)}}
+
+  @media (prefers-reduced-motion: reduce){*{animation:none !important}}
+</style>
+</head>
+<body>
+  <div class="scene" id="scene">
+    <svg id="art" viewBox="0 0 1000 690" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div class="halftone"></div>
+    <div class="grain"></div>
+    <div class="vignette"></div>
+    <div class="tab"><span class="em">🍊</span><div><div class="t">Explain an orange</div><div class="d">★☆☆☆☆ · FIRST CONTACT</div></div></div>
+    <div class="credit">Paper Citrus Co. · Orenj</div>
+  </div>
+
+<script>
+/* ============================================================
+   Paper Citrus Co. — cut-paper orange grove (all hand-built SVG)
+   ============================================================ */
+const PAL = {
+  skyTop:"#FCEBCB", skyBot:"#FAD9A6",
+  hillBack:"#9FC08A", hillFront:"#7FA968", hillEdge:"#6E9A56",
+  groundBack:"#8FAE77", groundFront:"#6E9A56", groundEdge:"#5C8A46",
+  bark:"#A6663A", barkDark:"#824D2A", barkLight:"#BE7E4E",
+  leafA:"#5C9440", leafB:"#3F7A33", leafC:"#7BAE5E", leafHi:"#9CC46A", teal:"#2E8B8B",
+  orange:"#E2622B", orangeDk:"#C24A18", coral:"#F3996B", spec:"#FBD089", cap:"#4E8B3A",
+  cloud:"#FBF1DE", sun:"#E9B949", sunCore:"#F6D27A",
+  ink:"#20304A", misprint:"#FF5DA0",
+};
+
+/* seeded RNG so the layout is stable across reloads */
+function rng(seed){let s=seed%2147483647;if(s<=0)s+=2147483646;return()=>(s=s*16807%2147483647)/2147483647;}
+
+/* organic "cut paper" blob path */
+function blob(cx,cy,r,wob,pts,rand){
+  let d="";
+  for(let i=0;i<pts;i++){
+    const a=(i/pts)*Math.PI*2;
+    const rr=r*(1-wob/2+rand()*wob);
+    const x=cx+Math.cos(a)*rr, y=cy+Math.sin(a)*rr*0.92;
+    if(i===0){d=`M ${x.toFixed(1)} ${y.toFixed(1)}`;}
+    else{
+      const pa=((i-0.5)/pts)*Math.PI*2;
+      const prr=r*(1-wob/2+rand()*wob);
+      const mx=cx+Math.cos(pa)*prr*1.04, my=cy+Math.sin(pa)*prr*0.96;
+      d+=` Q ${mx.toFixed(1)} ${my.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)}`;
+    }
+  }
+  return d+" Z";
+}
+
+/* the shapes of one clean paper orange, centred on (0,0) */
+function orangeShapes(r){const f=(n)=>n.toFixed(1);return `
+  <circle cx="0" cy="0" r="${f(r)}" fill="${PAL.orange}"/>
+  <ellipse cx="${f(r*0.32)}" cy="${f(r*0.4)}" rx="${f(r*0.6)}" ry="${f(r*0.52)}" fill="${PAL.orangeDk}" opacity=".5"/>
+  <ellipse cx="${f(-r*0.3)}" cy="${f(-r*0.34)}" rx="${f(r*0.5)}" ry="${f(r*0.38)}" fill="${PAL.coral}"/>
+  <ellipse cx="${f(-r*0.4)}" cy="${f(-r*0.44)}" rx="${f(r*0.2)}" ry="${f(r*0.14)}" fill="${PAL.spec}"/>
+  <circle cx="0" cy="${f(r*0.82)}" r="${f(r*0.1)}" fill="${PAL.orangeDk}"/>
+  <rect x="-1.6" y="${f(-r-4)}" width="3.2" height="7" rx="1.6" fill="${PAL.barkDark}"/>
+  <path d="M1 ${f(-r-1)} q 11 -9 20 -2 q -8 9 -20 4 Z" fill="${PAL.cap}"/>
+  <path d="M3 ${f(-r-1)} H 17" stroke="${PAL.leafB}" stroke-width="1.1" opacity=".6"/>`;}
+
+/* a small white orange-blossom */
+function blossom(x,y,sc){return `<g transform="translate(${x.toFixed(0)} ${y.toFixed(0)}) scale(${sc.toFixed(2)})">
+  <g fill="#FFF6EA"><circle cx="0" cy="-5" r="3.6"/><circle cx="5" cy="-1" r="3.6"/><circle cx="3" cy="5" r="3.6"/><circle cx="-3" cy="5" r="3.6"/><circle cx="-5" cy="-1" r="3.6"/></g>
+  <circle r="2.1" fill="${PAL.spec}"/></g>`;}
+
+/* positioned + jiggling orange */
+function orange(x,y,r,delay){
+  return `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)})"><g class="orange" style="animation-delay:${delay}s">${orangeShapes(r)}</g></g>`;
+}
+
+function build(){
+  const R=rng(7);
+  let s="";
+
+  /* ---------- DEFS ---------- */
+  s+=`<defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${PAL.skyTop}"/><stop offset="100%" stop-color="${PAL.skyBot}"/></linearGradient>
+    <radialGradient id="sunGlow" cx="81%" cy="16%" r="58%">
+      <stop offset="0%" stop-color="#FFEAB0" stop-opacity=".6"/><stop offset="62%" stop-color="#FFEAB0" stop-opacity="0"/></radialGradient>
+    <filter id="dropBig" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="9" stdDeviation="8" flood-color="${PAL.ink}" flood-opacity=".16"/></filter>
+    <filter id="dropMid" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="${PAL.ink}" flood-opacity=".18"/></filter>
+    <filter id="dropSm" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="2.5" stdDeviation="2" flood-color="${PAL.ink}" flood-opacity=".22"/></filter>
+  </defs>`;
+
+  /* ---------- SKY ---------- */
+  s+=`<rect width="1000" height="690" fill="url(#sky)"/>`;
+  s+=`<rect width="1000" height="690" fill="url(#sunGlow)"/>`;
+
+  /* sun (top-right): outer translate + soft coral off-register ghost; inner groups animate */
+  const sx=812, sy=128;
+  s+=`<g filter="url(#dropMid)" transform="translate(${sx} ${sy})">
+    <circle cx="5" cy="5" r="62" fill="${PAL.coral}" opacity=".35"/>
+    <g class="sun-rays">`;
+  for(let i=0;i<12;i++){const a=i*30*Math.PI/180;
+    s+=`<path d="M ${(Math.cos(a)*70).toFixed(1)} ${(Math.sin(a)*70).toFixed(1)} L ${(Math.cos(a+0.13)*104).toFixed(1)} ${(Math.sin(a+0.13)*104).toFixed(1)} L ${(Math.cos(a-0.13)*104).toFixed(1)} ${(Math.sin(a-0.13)*104).toFixed(1)} Z" fill="${PAL.sun}"/>`;}
+  s+=`</g>
+    <g class="sun">
+      <circle r="60" fill="${PAL.sun}"/>
+      <circle r="60" fill="none" stroke="${PAL.sunCore}" stroke-width="7" opacity=".7"/>
+      <circle r="40" fill="${PAL.sunCore}"/>
+      <circle cx="-16" cy="-14" r="9" fill="#FFE9B0" opacity=".8"/>
+    </g>
+  </g>`;
+
+  /* clouds (cream paper) drifting */
+  const cloud=(scale,top,dur,delay,op)=>`<g transform="translate(0 ${top})"><g class="cloud" style="animation-duration:${dur}s;animation-delay:${delay}s">
+     <g filter="url(#dropSm)" transform="scale(${scale})" opacity="${op}">
+       <ellipse cx="60" cy="36" rx="46" ry="26" fill="${PAL.cloud}"/>
+       <ellipse cx="104" cy="26" rx="40" ry="30" fill="${PAL.cloud}"/>
+       <ellipse cx="146" cy="38" rx="38" ry="22" fill="${PAL.cloud}"/>
+       <rect x="20" y="48" width="150" height="20" rx="10" fill="${PAL.cloud}"/>
+     </g></g></g>`;
+  s+=cloud(1,70,46,-6,.95)+cloud(.7,150,62,-30,.8)+cloud(.85,40,54,-44,.55);
+
+  /* a little paper bird gliding + two distant ones */
+  s+=`<g transform="translate(0 120)"><g class="bird"><g transform="scale(.9)">
+        <path class="bird-wing" d="M0 0 q-22 -16 -40 -6 q22 4 40 6Z" fill="${PAL.ink}"/>
+        <path d="M0 0 q22 -16 40 -6 q-22 4 -40 6Z" fill="${PAL.ink}"/>
+      </g></g></g>`;
+  const mbird=(x,y,sc)=>`<g transform="translate(${x} ${y}) scale(${sc})" opacity=".75"><path d="M0 0 q-10 -9 -19 -3 M0 0 q10 -9 19 -3" stroke="${PAL.ink}" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>`;
+  s+=mbird(602,96,1)+mbird(648,118,0.8)+mbird(556,128,0.65);
+
+  /* ---------- HILLS ---------- */
+  s+=`<g filter="url(#dropMid)"><path d="M0 470 Q 250 380 520 452 T 1000 440 L1000 690 L0 690Z" fill="${PAL.hillBack}"/></g>`;
+  s+=`<g filter="url(#dropMid)"><path d="M0 520 Q 320 452 640 512 T 1000 508 L1000 690 L0 690Z" fill="${PAL.hillFront}"/></g>`;
+  /* a small distant tree on the hill */
+  s+=`<g transform="translate(150 470)" opacity=".9"><rect x="-6" y="-6" width="12" height="40" rx="4" fill="${PAL.barkDark}"/><circle cx="0" cy="-26" r="34" fill="${PAL.leafB}"/><circle cx="-18" cy="-12" r="24" fill="${PAL.leafA}"/><circle cx="18" cy="-14" r="22" fill="${PAL.leafA}"/></g>`;
+
+  /* ---------- GROUND ---------- */
+  s+=`<path d="M0 560 Q 500 520 1000 560 L1000 690 L0 690Z" fill="${PAL.groundBack}"/>`;
+  s+=`<path d="M0 600 Q 500 568 1000 600 L1000 690 L0 690Z" fill="${PAL.groundFront}"/>`;
+  s+=`<path d="M0 600 Q 500 568 1000 600 L1000 612 Q 500 580 0 612Z" fill="${PAL.groundEdge}" opacity=".6"/>`;
+
+  /* ---------- THE TREE ---------- */
+  const tx=410;
+  /* soft cast shadow that grounds the tree */
+  s+=`<ellipse cx="${tx+6}" cy="640" rx="186" ry="28" fill="${PAL.ink}" opacity=".12"/>`;
+  s+=`<g filter="url(#dropBig)">
+    <path d="M${tx-44} 622 Q ${tx-72} 612 ${tx-92} 626 Q ${tx-60} 610 ${tx-38} 596 Z" fill="${PAL.barkDark}"/>
+    <path d="M${tx+40} 620 Q ${tx+74} 612 ${tx+98} 628 Q ${tx+62} 610 ${tx+36} 596 Z" fill="${PAL.barkDark}"/>
+    <path d="M${tx-42} 626 C ${tx-50} 520, ${tx-30} 430, ${tx-26} 360
+             L ${tx+30} 360 C ${tx+34} 430, ${tx+52} 540, ${tx+42} 626 Z" fill="${PAL.bark}"/>
+    <path d="M${tx-26} 360 C ${tx-30} 430, ${tx-46} 540, ${tx-38} 626 L ${tx-16} 626 C ${tx-20} 520, ${tx-12} 430, ${tx-12} 360 Z" fill="${PAL.barkLight}" opacity=".55"/>
+    <g stroke="${PAL.barkDark}" stroke-width="3" stroke-linecap="round" opacity=".45" fill="none">
+      <path d="M${tx-10} 470 q5 18 0 42"/><path d="M${tx+12} 504 q-3 16 0 36"/><path d="M${tx} 408 q4 14 0 30"/>
+    </g>
+  </g>`;
+
+  /* canopy: a swaying group of branches + leaf-masses + oranges + blossoms */
+  s+=`<g class="canopy">`;
+  s+=`<g stroke="${PAL.bark}" stroke-width="18" stroke-linecap="round" fill="none" filter="url(#dropMid)">
+        <path d="M${tx} 372 C ${tx-34} 320 ${tx-94} 300 ${tx-150} 272"/>
+        <path d="M${tx} 372 C ${tx+34} 320 ${tx+94} 296 ${tx+150} 264"/>
+        <path d="M${tx} 366 C ${tx-6} 300 ${tx-10} 250 ${tx-8} 198"/>
+      </g>`;
+  /* leaf masses: back (dark) → mid → drape over the trunk join */
+  const masses=[
+    [tx-130,250,118,PAL.leafB],[tx+130,238,120,PAL.leafB],[tx,166,142,PAL.leafB],
+    [tx-70,300,106,PAL.leafA],[tx+78,296,110,PAL.leafA],[tx-160,316,88,PAL.leafA],[tx+168,310,88,PAL.leafA],
+    [tx,252,130,PAL.leafA],
+    [tx-92,360,74,PAL.leafA],[tx+96,356,76,PAL.leafA],[tx,360,90,PAL.leafB],
+    [tx-60,210,84,PAL.leafC],[tx+70,206,82,PAL.leafC],[tx,150,78,PAL.leafC],[tx-150,260,64,PAL.leafB],[tx+158,256,60,PAL.leafA],
+  ];
+  s+=`<g filter="url(#dropBig)">`;
+  masses.forEach((m,i)=>{ s+=`<path d="${blob(m[0],m[1],m[2],0.28,11,rng(11+i*3))}" fill="${m[3]}"/>`; });
+  s+=`</g>`;
+  /* sunlit dappled highlights on the top / sun-facing side */
+  const hi=[[tx+60,150,46],[tx+120,196,38],[tx-4,118,40],[tx+150,250,30],[tx-70,180,30]];
+  s+=`<g fill="${PAL.leafHi}" opacity=".7">`;
+  hi.forEach((h,i)=>{ s+=`<path d="${blob(h[0],h[1],h[2],0.3,9,rng(40+i*5))}"/>`; });
+  s+=`</g>`;
+
+  /* oranges — evenly spaced so they nest in the leaves */
+  const ocx=tx, ocy=250, oax=200, oay=150;
+  const oranges=[]; let tries=0;
+  while(oranges.length<13 && tries<700){
+    tries++;
+    const a=R()*6.283, rad=Math.sqrt(R());
+    const x=ocx+Math.cos(a)*oax*rad, y=ocy+Math.sin(a)*oay*rad;
+    if(y>ocy+112) continue;
+    const r=15+R()*6;
+    if(oranges.some(o=>Math.hypot(o.x-x,o.y-y) < o.r+r+12)) continue;
+    oranges.push({x,y,r,d:(R()*3).toFixed(2)});
+  }
+  oranges.forEach(o=>{ s+=`<ellipse cx="${(o.x+3).toFixed(1)}" cy="${(o.y+6).toFixed(1)}" rx="${(o.r*0.95).toFixed(1)}" ry="${(o.r*0.72).toFixed(1)}" fill="${PAL.leafB}" opacity=".45"/>`; });
+  /* blossoms tucked among the leaves */
+  for(let i=0;i<9;i++){const a=R()*6.283, rad=Math.sqrt(R());
+    const bx=ocx+Math.cos(a)*oax*0.95*rad, by=ocy+Math.sin(a)*oay*0.92*rad;
+    if(by>ocy+96) continue; s+=blossom(bx,by,0.7+R()*0.4);}
+  oranges.forEach(o=> s+=orange(o.x,o.y,o.r,o.d));
+  s+=`</g>`; // end canopy
+
+  /* the hero orange that drops + bounces */
+  s+=`<g transform="translate(${tx+150} 300)"><g class="fall-orange">${orangeShapes(20)}</g></g>`;
+
+  /* drifting leaves */
+  const leaf=(x,y,delay,fill)=>`<g transform="translate(${x} ${y})"><g class="leaf-fall" style="animation-delay:${delay}s"><path d="M0 0 q14 -10 26 0 q-12 12 -26 0Z" fill="${fill}"/><path d="M3 0 H22" stroke="${PAL.leafB}" stroke-width="1.5"/></g></g>`;
+  s+=leaf(tx+120,250,0,PAL.leafA)+leaf(tx-100,230,2.4,PAL.leafC)+leaf(tx+40,200,4.8,PAL.leafA)+leaf(tx-160,280,3.5,PAL.leafA);
+
+  /* ---------- GROUND DETAILS ---------- */
+  s+=`<g filter="url(#dropSm)">`+orange(tx-150,632,18,"1.2")+orange(tx+210,640,16,"2.1")+orange(tx+250,628,14,"0.4")+`</g>`;
+  /* crate of oranges */
+  s+=`<g filter="url(#dropMid)" transform="translate(700 600)">
+      <rect x="0" y="0" width="120" height="62" rx="8" fill="${PAL.bark}"/>
+      <rect x="0" y="0" width="120" height="62" rx="8" fill="none" stroke="${PAL.barkDark}" stroke-width="4"/>
+      <line x1="0" y1="21" x2="120" y2="21" stroke="${PAL.barkDark}" stroke-width="4"/>
+      <line x1="40" y1="0" x2="40" y2="62" stroke="${PAL.barkDark}" stroke-width="3" opacity=".6"/>
+      <line x1="80" y1="0" x2="80" y2="62" stroke="${PAL.barkDark}" stroke-width="3" opacity=".6"/>
+    </g>`;
+  s+=orange(722,596,17,"0.7")+orange(756,590,17,"1.5")+orange(790,596,17,"0.2")+orange(740,580,16,"1.9");
+
+  /* grass tufts */
+  for(let i=0;i<26;i++){
+    const gx=20+i*38+R()*16, gy=636+R()*30, h=18+R()*22, col=[PAL.groundEdge,PAL.leafB,PAL.groundFront][i%3];
+    s+=`<g transform="translate(${gx.toFixed(0)} ${gy.toFixed(0)})"><g class="grass" style="animation-delay:${(R()*4).toFixed(2)}s">
+        <path d="M0 0 Q -4 -${h} -10 -${h+4}" stroke="${col}" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M0 0 Q 0 -${h+6} 2 -${h+10}" stroke="${col}" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M0 0 Q 5 -${h} 12 -${h+2}" stroke="${col}" stroke-width="4" fill="none" stroke-linecap="round"/>
+      </g></g>`;
+  }
+  const flower=(x,y,c)=>`<g transform="translate(${x} ${y})"><g fill="${c}"><circle cx="0" cy="-6" r="4"/><circle cx="6" cy="0" r="4"/><circle cx="-6" cy="0" r="4"/><circle cx="0" cy="6" r="4"/></g><circle r="3.4" fill="${PAL.spec}"/></g>`;
+  s+=flower(120,660,PAL.misprint)+flower(560,662,"#fff")+flower(880,656,PAL.misprint)+flower(300,668,"#fff");
+
+  /* ---------- BUTTERFLY (roams the lower-centre meadow) ---------- */
+  s+=`<g transform="translate(470 486)"><g class="butterfly">
+      <path class="bf-wing" d="M0 0 q-26 -22 -30 4 q-2 24 30 8Z" fill="${PAL.teal}"/>
+      <path class="bf-wing r" d="M0 0 q26 -22 30 4 q2 24 -30 8Z" fill="${PAL.misprint}"/>
+      <ellipse cx="0" cy="2" rx="3.5" ry="10" fill="${PAL.ink}"/>
+      <path d="M0 -8 q-5 -8 -10 -9 M0 -8 q5 -8 10 -9" stroke="${PAL.ink}" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </g></g>`;
+
+  /* ---------- PIP (paper) gazing up ---------- */
+  s+=`<g transform="translate(176 560) scale(.62)">
+      <ellipse cx="107" cy="212" rx="60" ry="12" fill="${PAL.ink}" opacity=".18"/>
+      <g class="pip-body">
+        <g filter="url(#dropSm)"><path d="M107 44 C101 16 80 14 72 23 C88 25 96 36 102 50Z" fill="${PAL.leafA}"/>
+        <path d="M107 46 C113 18 135 15 143 25 C125 27 117 38 111 52Z" fill="${PAL.cap}"/></g>
+        <rect x="102" y="42" width="9" height="20" rx="4" fill="${PAL.cap}"/>
+        <circle cx="102" cy="124" r="80" fill="${PAL.misprint}" opacity=".18"/>
+        <g filter="url(#dropMid)"><circle cx="107" cy="124" r="80" fill="${PAL.orange}"/></g>
+        <clipPath id="pBody"><circle cx="107" cy="124" r="80"/></clipPath>
+        <g clip-path="url(#pBody)"><circle cx="78" cy="88" r="62" fill="${PAL.coral}"/><circle cx="150" cy="176" r="66" fill="#C84E1E"/></g>
+        <circle cx="60" cy="132" r="11" fill="#EE6F6F"/><circle cx="154" cy="132" r="11" fill="#EE6F6F"/>
+        <ellipse cx="83" cy="110" rx="11" ry="14" fill="${PAL.ink}"/><ellipse cx="131" cy="110" rx="11" ry="14" fill="${PAL.ink}"/>
+        <circle cx="85" cy="104" r="3.4" fill="#fbf1de"/><circle cx="133" cy="104" r="3.4" fill="#fbf1de"/>
+        <rect class="eyelid" x="72" y="103" width="22" height="9" rx="4" fill="${PAL.orange}"/>
+        <rect class="eyelid" x="120" y="103" width="22" height="9" rx="4" fill="${PAL.orange}" style="animation-delay:.04s"/>
+        <path d="M90 146 q19 16 38 0 q-19 8 -38 0Z" fill="${PAL.ink}"/>
+        <path d="M183 150 q26 -10 30 -36 q-18 8 -34 18Z" fill="#D9560F"/>
+      </g>
+    </g>`;
+
+  /* a soft idea-sparkle above Pip */
+  s+=`<g transform="translate(300 470)" fill="${PAL.spec}" opacity=".9"><path d="M0 0 l4 11 11 4 -11 4 -4 11 -4 -11 -11 -4 11 -4Z"/></g>`;
+
+  document.getElementById('art').innerHTML=s;
+}
+build();
+</script>
+</body>
+</html>
