@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3" />
+  <link rel="stylesheet" href="style.css?v=4" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍊</text></svg>" />
 </head>
 <body>
@@ -66,7 +66,10 @@
         <p class="ex-prompt" id="ex-prompt"></p>
         <p class="ex-audience" id="ex-audience"></p>
         <div class="forbidden" id="ex-forbidden"></div>
-        <textarea id="ex-input" rows="6" placeholder="Type your explanation… 3–6 sentences. Reach for an analogy. Speak their language."></textarea>
+        <div class="input-wrap">
+          <textarea id="ex-input" rows="6" placeholder="Type your explanation… 3–6 sentences. Reach for an analogy. Speak their language."></textarea>
+          <button class="mic-btn" id="btn-mic" type="button" aria-label="Dictate with your voice" title="Dictate with your voice">🎤</button>
+        </div>
         <div class="ex-foot">
           <span class="wordcount" id="ex-wordcount">0 words</span>
           <button class="btn btn-primary" id="btn-submit" disabled>Show Pip ✨</button>
@@ -174,7 +177,7 @@
     </div>
   </div>
 
-  <script src="art.js?v=3"></script>
-  <script src="app.js?v=3"></script>
+  <script src="art.js?v=4"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>

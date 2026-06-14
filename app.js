@@ -920,6 +920,76 @@ $("btn-quit-exercise").addEventListener("click", () => { clearInterval(current?.
 $("btn-retry").addEventListener("click", () => startExercise(current.lesson));
 $("btn-continue").addEventListener("click", () => { renderHome(); showScreen("home"); });
 
+/* ---------------- Voice dictation (Web Speech API) ----------------
+   Lets the learner speak their explanation straight into the box.
+   Browser-native — no key, no deps. Hides itself where unsupported. */
+(function setupVoiceInput() {
+  const micBtn = $("btn-mic");
+  const input = $("ex-input");
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!micBtn || !SR) { if (micBtn) micBtn.hidden = true; return; } // can't dictate here
+
+  let rec = null;
+  let listening = false;
+  let baseText = "";   // whatever was already typed when dictation began
+  let finalText = "";  // speech finalized so far this session
+
+  function syncInput(interim) {
+    const joiner = baseText && !/\s$/.test(baseText) ? " " : "";
+    input.value = baseText + joiner + finalText + interim;
+    input.dispatchEvent(new Event("input")); // refresh word count + submit state
+  }
+
+  function setIdle() {
+    listening = false;
+    micBtn.classList.remove("recording");
+    micBtn.setAttribute("aria-label", "Dictate with your voice");
+    micBtn.title = "Dictate with your voice";
+  }
+
+  function stop() { if (rec) { try { rec.stop(); } catch (e) {} } setIdle(); }
+
+  function start() {
+    rec = new SR();
+    rec.lang = navigator.language || "en-US";
+    rec.continuous = true;
+    rec.interimResults = true;
+
+    baseText = input.value;
+    finalText = "";
+
+    rec.onresult = (e) => {
+      let interim = "";
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const chunk = e.results[i][0].transcript;
+        if (e.results[i].isFinal) finalText += chunk;
+        else interim += chunk;
+      }
+      syncInput(interim);
+    };
+    rec.onerror = (e) => {
+      if (e.error === "not-allowed" || e.error === "service-not-allowed")
+        toast("Microphone blocked — allow mic access to dictate 🎤");
+      else if (e.error === "no-speech")
+        toast("Didn't catch that — try again 🎤");
+      setIdle();
+    };
+    rec.onend = () => { if (listening) setIdle(); }; // may stop itself after silence
+
+    try { rec.start(); } catch (e) { return; }
+    listening = true;
+    micBtn.classList.add("recording");
+    micBtn.setAttribute("aria-label", "Stop dictating");
+    micBtn.title = "Stop dictating";
+    toast("Listening… speak now 🎤");
+  }
+
+  micBtn.addEventListener("click", () => { listening ? stop() : start(); });
+  // leaving the exercise screen should always end dictation
+  $("btn-quit-exercise").addEventListener("click", stop);
+  $("btn-submit").addEventListener("click", stop);
+})();
+
 $("btn-save-key").addEventListener("click", () => {
   S.apiKey = $("api-key").value.trim(); save(); renderSettings();
   const newly = checkAchievements();
