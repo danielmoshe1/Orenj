@@ -374,3 +374,73 @@ textarea:focus { border-color: var(--orange); }
   .node-disc { width: 64px; height: 64px; font-size: 28px; }
   .stat { padding: 5px 9px; font-size: 13px; }
 }
+
+/* =========================================================
+   Paper Citrus Co. — illustrated exercise scene (ART.scene)
+   Self-contained + "og-" prefixed so nothing here collides
+   with the rest of the app's classes or @keyframes.
+   ========================================================= */
+.ex-art { position: relative; width: 100%; aspect-ratio: 1000 / 690; overflow: hidden; background: #FBF1DE; border-radius: var(--radius) var(--radius) 0 0; display: none; }
+.ex-art .og-art { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.og-halftone { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: multiply; opacity: .28;
+  background-image: radial-gradient(rgba(170,82,52,.4) 19%, transparent 20%); background-size: 5px 5px; }
+.og-grain { position: absolute; inset: 0; pointer-events: none; opacity: .06; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.og-vignette { position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 120px rgba(120,70,20,.18); }
+
+/* scene-mode tweaks the default purple stage container */
+.ex-scene.scene-mode { padding: 0; background: #FBF1DE; }
+.ex-scene.scene-mode::after { display: none; }
+.ex-scene.scene-mode .btn-back { background: rgba(32,48,74,.55); border-color: rgba(255,255,255,.45); color: #fff; }
+.ex-scene.scene-mode .ex-timer { color: #20304A; background: rgba(251,241,222,.82); padding: 3px 10px; border-radius: 999px; box-shadow: 0 2px 6px rgba(32,48,74,.18); }
+
+/* animated groups pivot on their own box */
+.og-canopy,.og-orange,.og-fall,.og-leaf,.og-cloud,.og-sun,.og-rays,.og-pip,.og-bf,.og-wing,.og-bird,.og-birdwing,.og-grass,.og-lid { transform-box: fill-box; }
+
+.og-canopy { transform-origin: 50% 94%; animation: ogSway 6.5s ease-in-out infinite alternate; }
+@keyframes ogSway { from { transform: rotate(-1.6deg);} to { transform: rotate(1.6deg);} }
+.og-orange { transform-origin: 50% 4%; animation: ogJiggle 3.4s ease-in-out infinite; }
+@keyframes ogJiggle { 0%,100% { transform: translateY(0) rotate(0);} 50% { transform: translateY(2.5px) rotate(2.5deg);} }
+.og-sun { transform-origin: center; animation: ogSunPulse 5s ease-in-out infinite; }
+@keyframes ogSunPulse { 0%,100% { transform: scale(1);} 50% { transform: scale(1.05);} }
+.og-rays { transform-origin: center; animation: ogSpin 80s linear infinite; }
+@keyframes ogSpin { to { transform: rotate(360deg);} }
+.og-cloud { animation: ogDriftX linear infinite; }
+@keyframes ogDriftX { from { transform: translateX(-280px);} to { transform: translateX(1040px);} }
+.og-grass { transform-origin: 50% 100%; animation: ogBlade 4s ease-in-out infinite alternate; }
+@keyframes ogBlade { from { transform: skewX(-6deg);} to { transform: skewX(6deg);} }
+.og-fall { transform-origin: 50% 50%; animation: ogFall 6s cubic-bezier(.5,.05,.6,1) infinite; }
+@keyframes ogFall {
+  0%,40% { transform: translateY(0) rotate(0); opacity: 0; }
+  41% { opacity: 1; }
+  60% { transform: translateY(322px) rotate(220deg); opacity: 1; }
+  64% { transform: translateY(304px) scale(1.16,.80) rotate(228deg); }
+  70% { transform: translateY(276px) scale(.95,1.06) rotate(238deg); }
+  78% { transform: translateY(312px) scale(1.06,.92) rotate(246deg); }
+  86%,100% { transform: translateY(320px) rotate(250deg); opacity: 1; }
+}
+.og-leaf { animation: ogLeaf 7s linear infinite; }
+@keyframes ogLeaf {
+  0% { transform: translate(0,0) rotate(0); opacity: 0; }
+  8%,90% { opacity: 1; }
+  100% { transform: translate(-120px,360px) rotate(420deg); opacity: 0; }
+}
+.og-bf { animation: ogFlutter 9s ease-in-out infinite; }
+@keyframes ogFlutter {
+  0% { transform: translate(0,0) rotate(-4deg);} 25% { transform: translate(120px,-40px) rotate(6deg);}
+  50% { transform: translate(240px,10px) rotate(-4deg);} 75% { transform: translate(120px,40px) rotate(6deg);}
+  100% { transform: translate(0,0) rotate(-4deg);}
+}
+.og-wing { transform-origin: 100% 50%; animation: ogFlap .22s ease-in-out infinite alternate; }
+.og-wing.r { transform-origin: 0% 50%; }
+@keyframes ogFlap { from { transform: scaleX(1);} to { transform: scaleX(.45);} }
+.og-pip { transform-origin: 50% 100%; animation: ogPipBob 3s ease-in-out infinite; }
+@keyframes ogPipBob { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-5px);} }
+.og-lid { transform-origin: 50% 50%; animation: ogBlink 4.5s infinite; }
+@keyframes ogBlink { 0%,93%,100% { transform: scaleY(0);} 96% { transform: scaleY(1);} }
+.og-bird { animation: ogFly 24s linear infinite; }
+@keyframes ogFly { 0% { transform: translate(1060px,0);} 100% { transform: translate(-220px,-30px);} }
+.og-birdwing { transform-origin: 0% 50%; animation: ogFlap2 .5s ease-in-out infinite alternate; }
+@keyframes ogFlap2 { from { transform: rotate(-18deg);} to { transform: rotate(20deg);} }
+
+@media (prefers-reduced-motion: reduce) { .ex-art * { animation: none !important; } }

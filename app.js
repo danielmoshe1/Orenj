@@ -16,7 +16,7 @@ const CHAPTERS = [
     sub: "Easy & playful — explain everyday wonders to a curious alien.",
     lessons: [
       {
-        id: "orange", emoji: "🍊", kind: "alien", difficulty: 1,
+        id: "orange", emoji: "🍊", kind: "alien", difficulty: 1, scene: "orange-grove",
         title: "Explain an orange",
         prompt: "A friendly alien just landed and has never seen food. Explain what an orange is.",
         audience: "It has no idea what fruit, trees, or eating are — start from zero.",
@@ -450,8 +450,26 @@ let current = null;
 
 function startExercise(lesson) {
   current = { lesson, startedAt: Date.now() };
-  $("ex-aud").innerHTML = ART.audience(lesson.kind);
-  $("ex-pip").innerHTML = ART.pip("happy");
+
+  // Hero art: an illustrated animated scene if the lesson has one,
+  // otherwise the default "audience ↔ Pip" stage.
+  const exScene = $("ex-scene"), exArt = $("ex-art");
+  const exStage = exScene.querySelector(".ex-stage");
+  const sceneHTML = lesson.scene && ART.scene ? ART.scene(lesson.scene) : "";
+  if (sceneHTML) {
+    exArt.innerHTML = sceneHTML;
+    exArt.style.display = "block";
+    if (exStage) exStage.style.display = "none";
+    exScene.classList.add("scene-mode");
+  } else {
+    exArt.innerHTML = "";
+    exArt.style.display = "none";
+    if (exStage) exStage.style.display = "";
+    exScene.classList.remove("scene-mode");
+    $("ex-aud").innerHTML = ART.audience(lesson.kind);
+    $("ex-pip").innerHTML = ART.pip("happy");
+  }
+
   $("ex-diff").textContent = "★".repeat(lesson.difficulty) + "☆".repeat(5 - lesson.difficulty);
   $("ex-title").textContent = lesson.title;
   $("ex-prompt").textContent = lesson.prompt;
