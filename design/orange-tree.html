@@ -29,9 +29,9 @@
   .scene svg{position:absolute;inset:0;width:100%;height:100%;display:block}
 
   /* riso halftone + paper grain, layered over everything */
-  .halftone{position:absolute;inset:0;pointer-events:none;z-index:8;mix-blend-mode:multiply;opacity:.4;
-    background-image:radial-gradient(rgba(192,73,43,.45) 22%, transparent 23%);
-    background-size:6px 6px;}
+  .halftone{position:absolute;inset:0;pointer-events:none;z-index:8;mix-blend-mode:multiply;opacity:.28;
+    background-image:radial-gradient(rgba(170,82,52,.4) 19%, transparent 20%);
+    background-size:5px 5px;}
   .grain{position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.06;mix-blend-mode:multiply;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");}
   .vignette{position:absolute;inset:0;pointer-events:none;z-index:7;
@@ -122,7 +122,6 @@
     <div class="grain"></div>
     <div class="vignette"></div>
     <div class="tab"><span class="em">🍊</span><div><div class="t">Explain an orange</div><div class="d">★☆☆☆☆ · FIRST CONTACT</div></div></div>
-    <div class="credit">Paper Citrus Co. · Orenj</div>
   </div>
 
 <script>
@@ -227,13 +226,13 @@ function build(){
      </g></g></g>`;
   s+=cloud(1,70,46,-6,.95)+cloud(.7,150,62,-30,.8)+cloud(.85,40,54,-44,.55);
 
-  /* a little paper bird gliding + two distant ones */
-  s+=`<g transform="translate(0 120)"><g class="bird"><g transform="scale(.9)">
+  /* one little paper bird gliding + a calm distant pair */
+  s+=`<g transform="translate(0 116)"><g class="bird"><g transform="scale(.78)">
         <path class="bird-wing" d="M0 0 q-22 -16 -40 -6 q22 4 40 6Z" fill="${PAL.ink}"/>
         <path d="M0 0 q22 -16 40 -6 q-22 4 -40 6Z" fill="${PAL.ink}"/>
       </g></g></g>`;
-  const mbird=(x,y,sc)=>`<g transform="translate(${x} ${y}) scale(${sc})" opacity=".75"><path d="M0 0 q-10 -9 -19 -3 M0 0 q10 -9 19 -3" stroke="${PAL.ink}" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>`;
-  s+=mbird(602,96,1)+mbird(648,118,0.8)+mbird(556,128,0.65);
+  const mbird=(x,y,sc)=>`<g transform="translate(${x} ${y}) scale(${sc})" opacity=".6"><path d="M0 0 q-10 -9 -19 -3 M0 0 q10 -9 19 -3" stroke="${PAL.ink}" stroke-width="2.4" fill="none" stroke-linecap="round"/></g>`;
+  s+=mbird(606,92,0.95)+mbird(648,112,0.75);
 
   /* ---------- HILLS ---------- */
   s+=`<g filter="url(#dropMid)"><path d="M0 470 Q 250 380 520 452 T 1000 440 L1000 690 L0 690Z" fill="${PAL.hillBack}"/></g>`;
@@ -336,13 +335,13 @@ function build(){
   const flower=(x,y,c)=>`<g transform="translate(${x} ${y})"><g fill="${c}"><circle cx="0" cy="-6" r="4"/><circle cx="6" cy="0" r="4"/><circle cx="-6" cy="0" r="4"/><circle cx="0" cy="6" r="4"/></g><circle r="3.4" fill="${PAL.spec}"/></g>`;
   s+=flower(120,660,PAL.misprint)+flower(560,662,"#fff")+flower(880,656,PAL.misprint)+flower(300,668,"#fff");
 
-  /* ---------- BUTTERFLY (roams the lower-centre meadow) ---------- */
-  s+=`<g transform="translate(470 486)"><g class="butterfly">
+  /* ---------- BUTTERFLY (flits low over the meadow flowers) ---------- */
+  s+=`<g transform="translate(560 612)"><g class="butterfly"><g transform="scale(.82)">
       <path class="bf-wing" d="M0 0 q-26 -22 -30 4 q-2 24 30 8Z" fill="${PAL.teal}"/>
       <path class="bf-wing r" d="M0 0 q26 -22 30 4 q2 24 -30 8Z" fill="${PAL.misprint}"/>
       <ellipse cx="0" cy="2" rx="3.5" ry="10" fill="${PAL.ink}"/>
       <path d="M0 -8 q-5 -8 -10 -9 M0 -8 q5 -8 10 -9" stroke="${PAL.ink}" stroke-width="2" fill="none" stroke-linecap="round"/>
-    </g></g>`;
+    </g></g></g>`;
 
   /* ---------- PIP (paper) gazing up ---------- */
   s+=`<g transform="translate(176 560) scale(.62)">
@@ -355,18 +354,18 @@ function build(){
         <g filter="url(#dropMid)"><circle cx="107" cy="124" r="80" fill="${PAL.orange}"/></g>
         <clipPath id="pBody"><circle cx="107" cy="124" r="80"/></clipPath>
         <g clip-path="url(#pBody)"><circle cx="78" cy="88" r="62" fill="${PAL.coral}"/><circle cx="150" cy="176" r="66" fill="#C84E1E"/></g>
+        <!-- little side arms -->
+        <path d="M30 150 q-24 7 -28 30 q18 -8 30 -15Z" fill="#D9560F"/>
+        <path d="M184 150 q24 7 28 30 q-18 -8 -30 -15Z" fill="#D9560F"/>
         <circle cx="60" cy="132" r="11" fill="#EE6F6F"/><circle cx="154" cy="132" r="11" fill="#EE6F6F"/>
+        <!-- eyes gazing up at the tree -->
         <ellipse cx="83" cy="110" rx="11" ry="14" fill="${PAL.ink}"/><ellipse cx="131" cy="110" rx="11" ry="14" fill="${PAL.ink}"/>
-        <circle cx="85" cy="104" r="3.4" fill="#fbf1de"/><circle cx="133" cy="104" r="3.4" fill="#fbf1de"/>
-        <rect class="eyelid" x="72" y="103" width="22" height="9" rx="4" fill="${PAL.orange}"/>
-        <rect class="eyelid" x="120" y="103" width="22" height="9" rx="4" fill="${PAL.orange}" style="animation-delay:.04s"/>
-        <path d="M90 146 q19 16 38 0 q-19 8 -38 0Z" fill="${PAL.ink}"/>
-        <path d="M183 150 q26 -10 30 -36 q-18 8 -34 18Z" fill="#D9560F"/>
+        <circle cx="86" cy="102" r="3.6" fill="#fbf1de"/><circle cx="134" cy="102" r="3.6" fill="#fbf1de"/>
+        <rect class="eyelid" x="72" y="101" width="22" height="9" rx="4" fill="${PAL.orange}"/>
+        <rect class="eyelid" x="120" y="101" width="22" height="9" rx="4" fill="${PAL.orange}" style="animation-delay:.04s"/>
+        <path d="M92 144 q15 13 30 0 q-15 7 -30 0Z" fill="${PAL.ink}"/>
       </g>
     </g>`;
-
-  /* a soft idea-sparkle above Pip */
-  s+=`<g transform="translate(300 470)" fill="${PAL.spec}" opacity=".9"><path d="M0 0 l4 11 11 4 -11 4 -4 11 -4 -11 -11 -4 11 -4Z"/></g>`;
 
   document.getElementById('art').innerHTML=s;
 }
