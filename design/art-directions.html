@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Orenj — Three Art Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Nunito:wght@500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍊</text></svg>" />
+<style>
+:root{
+  --maxw: 1080px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Nunito",system-ui,sans-serif;
+  background:#0c0a16;
+  color:#fff;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+.grain{position:fixed;inset:0;z-index:99;pointer-events:none;opacity:.045;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+/* ============ COVER ============ */
+.cover{
+  position:relative;text-align:center;padding:84px 22px 70px;
+  background:
+    radial-gradient(60% 50% at 50% 0%, rgba(157,107,255,.30), transparent 70%),
+    radial-gradient(70% 60% at 50% 120%, rgba(255,140,26,.28), transparent 70%),
+    linear-gradient(180deg,#0d0726,#160f2c 60%,#1d1330);
+  overflow:hidden;
+}
+.cover .kicker{font-family:"Baloo 2";font-weight:700;letter-spacing:3px;text-transform:uppercase;font-size:13px;color:#ffcb6b;opacity:.9}
+.cover h1{
+  font-family:"Fraunces",serif;font-weight:600;font-size:clamp(40px,7vw,76px);line-height:1.02;margin:14px 0 8px;letter-spacing:-1px;
+}
+.cover h1 .o{background:linear-gradient(120deg,#ffd166,#ff8c1a,#ff5d8f);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover .lede{max-width:660px;margin:0 auto;color:rgba(255,255,255,.78);font-size:18px;line-height:1.6}
+.dna{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin:30px auto 0;max-width:760px}
+.dna span{font-size:13px;font-weight:800;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#fff}
+.dna b{color:#ffcb6b}
+.scrollhint{margin-top:34px;font-size:13px;color:rgba(255,255,255,.5);font-weight:700;letter-spacing:1px}
+.cover-pips{display:flex;gap:0;justify-content:center;align-items:flex-end;margin-top:18px}
+.cover-pips .pip{width:120px}
+.cover-pips .pip:nth-child(2){width:150px;margin:0 -6px}
+
+/* ============ SPREAD SHELL ============ */
+.spread{position:relative;padding:64px 0 70px;overflow:hidden}
+.spread + .spread{border-top:none}
+.spread-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+.spread-num{font-family:"Fraunces",serif;font-size:64px;font-weight:600;line-height:.8;opacity:.34}
+.spread-title{font-family:"Fraunces",serif;font-size:clamp(30px,4.4vw,46px);font-weight:600;letter-spacing:-.5px}
+.spread-tag{font-size:16px;font-weight:800;opacity:.85;margin:2px 0 0}
+.spread-philosophy{max-width:720px;font-size:16.5px;line-height:1.65;opacity:.85;margin:14px 0 30px}
+
+.grid{display:grid;grid-template-columns:minmax(280px,1fr) 1.25fr;gap:26px;align-items:start}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+
+.panel{border-radius:24px;padding:24px;position:relative;overflow:hidden}
+.panel h4{font-family:"Baloo 2";font-size:13px;letter-spacing:2px;text-transform:uppercase;opacity:.7;margin-bottom:14px;font-weight:700}
+
+/* hero (mascot) panel */
+.hero{display:flex;align-items:center;justify-content:center;min-height:360px;position:relative}
+.hero .pip{width:240px;height:auto;position:relative;z-index:2;filter:drop-shadow(0 24px 30px rgba(0,0,0,.35))}
+
+/* palette */
+.swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:520px){.swatches{grid-template-columns:repeat(2,1fr)}}
+.sw{border-radius:14px;height:78px;display:flex;flex-direction:column;justify-content:flex-end;padding:9px 10px;font-size:11px;font-weight:800;position:relative;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.sw small{display:block;opacity:.85;font-weight:700;font-size:10px;letter-spacing:.3px}
+
+/* type specimen */
+.type-row{margin-bottom:12px}
+.type-disp{font-size:34px;line-height:1.05}
+.type-body{font-size:15px;line-height:1.55;opacity:.88;margin-top:6px}
+.type-meta{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;opacity:.6;font-weight:800;margin-top:8px}
+
+/* components */
+.comp-grid{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.btn{border:none;border-radius:16px;padding:13px 26px;font-family:"Baloo 2";font-size:16px;font-weight:800;cursor:pointer}
+.node{width:96px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:5px}
+.node-disc{width:74px;height:74px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px}
+.node-label{font-family:"Baloo 2";font-size:12px;font-weight:700}
+.ring-wrap{position:relative;width:104px;height:104px}
+.ring-wrap svg{width:104px;height:104px;transform:rotate(-90deg)}
+.ring-wrap .ring-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:"Baloo 2";font-weight:800;font-size:30px}
+.bars{display:flex;flex-direction:column;gap:9px;flex:1;min-width:200px}
+.bar-row{display:grid;grid-template-columns:96px 1fr 30px;align-items:center;gap:9px;font-size:12px;font-weight:800}
+.bar-track{height:10px;border-radius:999px;overflow:hidden}
+.bar-fill{height:100%;border-radius:999px}
+
+/* chapter banner sample */
+.banner{border-radius:16px;padding:11px 16px;text-align:center;display:inline-block}
+.banner .b-emoji{font-size:20px}
+.banner .b-name{font-family:"Baloo 2";font-weight:800;font-size:15px}
+.banner .b-sub{font-size:11px;opacity:.8}
+
+/* mini journey strip */
+.journey{position:relative;height:230px;border-radius:20px;overflow:hidden}
+.journey svg.path{position:absolute;inset:0;width:100%;height:100%}
+.journey .jnode{position:absolute;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px}
+
+/* notes */
+.notes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+@media(max-width:720px){.notes{grid-template-columns:1fr}}
+.note{border-radius:18px;padding:16px 18px}
+.note h5{font-family:"Baloo 2";font-size:14px;font-weight:800;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.note ul{list-style:none;font-size:13.5px;line-height:1.5}
+.note li{padding-left:16px;position:relative;margin-bottom:6px;opacity:.92}
+.note li::before{content:"";position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%}
+.finish{margin-top:18px;font-size:13.5px;line-height:1.6;opacity:.82;border-radius:16px;padding:14px 18px}
+.finish b{font-weight:900}
+
+/* =========================================================
+   DIRECTION 01 — SUNLIT STORYBOOK
+   ========================================================= */
+.dir--storybook{
+  color:#3a2654;
+  background:
+    radial-gradient(80% 50% at 80% 0%, rgba(255,209,141,.55), transparent 70%),
+    radial-gradient(70% 50% at 0% 100%, rgba(159,198,160,.45), transparent 70%),
+    linear-gradient(180deg,#fff3df 0%,#ffe9cf 55%,#f7e6cf 100%);
+}
+.dir--storybook .spread-num,.dir--storybook .spread-title{color:#6a3a14}
+.dir--storybook .spread-tag{color:#b4571a}
+.dir--storybook .spread-philosophy{color:#5a4536}
+.dir--storybook .panel{background:rgba(255,255,255,.55);box-shadow:0 18px 40px rgba(120,70,20,.14),inset 0 0 0 1px rgba(255,255,255,.6);backdrop-filter:blur(2px)}
+.dir--storybook .panel h4{color:#a06a2c}
+.dir--storybook .hero{background:
+  radial-gradient(60% 55% at 50% 42%, rgba(255,236,196,.9), rgba(255,224,180,.2) 70%, transparent),
+  linear-gradient(180deg,#fff7e9,#ffedd2)}
+.dir--storybook .type-disp{font-family:"Fraunces",serif;font-weight:600;color:#5a3210}
+.dir--storybook .type-body{font-family:"Nunito";color:#5a4536}
+.dir--storybook .btn{background:#ff8c1a;color:#3a1d00;box-shadow:0 5px 0 #d35e00}
+.dir--storybook .btn.ghost{background:#f0e0c6;color:#7a5a30;box-shadow:0 5px 0 #d8c39c}
+.dir--storybook .node-disc{background:radial-gradient(circle at 35% 30%,#fff6dd,#ffcb3d);box-shadow:0 0 0 6px rgba(255,203,61,.35),0 8px 16px rgba(120,70,20,.3);border:3px solid #fff}
+.dir--storybook .node-label{color:#6a3a14}
+.dir--storybook .bar-track{background:#efe0c6}
+.dir--storybook .bar-row{color:#6a4a24}
+.dir--storybook .banner{background:rgba(255,255,255,.7);border:1px solid #f0d9b0;color:#6a3a14;box-shadow:0 8px 20px rgba(120,70,20,.12)}
+.dir--storybook .note{background:rgba(255,255,255,.55);box-shadow:inset 0 0 0 1px rgba(180,120,60,.18)}
+.dir--storybook .note h5{color:#6a3a14}
+.dir--storybook .note li::before{background:#ff8c1a}
+.dir--storybook .finish{background:rgba(255,255,255,.5);color:#5a4536;box-shadow:inset 0 0 0 1px rgba(180,120,60,.16)}
+.dir--storybook .journey{background:linear-gradient(180deg,#3a2360 0%,#a8466e 38%,#ff8c5a 64%,#ffd9a0 82%,#9fd06f 100%)}
+
+/* =========================================================
+   DIRECTION 02 — COSMIC CITRUS (neon)
+   ========================================================= */
+.dir--cosmic{
+  color:#eaf2ff;
+  background:
+    radial-gradient(55% 40% at 18% 8%, rgba(34,224,255,.22), transparent 70%),
+    radial-gradient(55% 45% at 85% 18%, rgba(255,46,147,.22), transparent 70%),
+    radial-gradient(80% 60% at 50% 110%, rgba(255,122,24,.25), transparent 70%),
+    linear-gradient(180deg,#0a0820 0%,#100a2c 50%,#0a0820 100%);
+}
+.dir--cosmic .spread-num{color:#fff;opacity:.22}
+.dir--cosmic .spread-title{color:#fff;text-shadow:0 0 24px rgba(139,92,255,.6)}
+.dir--cosmic .spread-tag{color:#5cf0ff}
+.dir--cosmic .spread-philosophy{color:rgba(234,242,255,.82)}
+.dir--cosmic .panel{background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(140,160,255,.18),0 10px 40px rgba(0,0,0,.4);backdrop-filter:blur(10px)}
+.dir--cosmic .panel h4{color:#9fb4ff}
+.dir--cosmic .hero{background:
+  radial-gradient(50% 50% at 50% 45%, rgba(139,92,255,.35), transparent 70%),
+  radial-gradient(40% 40% at 50% 60%, rgba(255,122,24,.3), transparent 70%);}
+.dir--cosmic .type-disp{font-family:"Sora";font-weight:800;color:#fff;text-shadow:0 0 18px rgba(34,224,255,.5)}
+.dir--cosmic .type-body{font-family:"Space Grotesk";color:rgba(234,242,255,.85)}
+.dir--cosmic .btn{font-family:"Sora";background:linear-gradient(120deg,#ff7a18,#ff2e93);color:#fff;box-shadow:0 0 22px rgba(255,46,147,.6),0 6px 18px rgba(0,0,0,.4)}
+.dir--cosmic .btn.ghost{background:rgba(255,255,255,.06);color:#9fdfff;box-shadow:inset 0 0 0 1.5px rgba(34,224,255,.55),0 0 18px rgba(34,224,255,.25)}
+.dir--cosmic .node-disc{background:radial-gradient(circle at 38% 30%,#fff,#ffb020 60%,#ff7a18);box-shadow:0 0 0 4px rgba(255,176,32,.22),0 0 26px rgba(255,122,24,.8)}
+.dir--cosmic .node-label{color:#cfe6ff}
+.dir--cosmic .bar-track{background:rgba(255,255,255,.1)}
+.dir--cosmic .bar-row{color:#cfe6ff}
+.dir--cosmic .banner{background:rgba(139,92,255,.16);border:1px solid rgba(34,224,255,.4);color:#eaf2ff;box-shadow:0 0 26px rgba(139,92,255,.35)}
+.dir--cosmic .note{background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(140,160,255,.2)}
+.dir--cosmic .note h5{color:#fff}
+.dir--cosmic .note li::before{background:#22e0ff;box-shadow:0 0 8px #22e0ff}
+.dir--cosmic .finish{background:rgba(255,255,255,.04);color:rgba(234,242,255,.85);box-shadow:inset 0 0 0 1px rgba(140,160,255,.2)}
+.dir--cosmic .journey{background:radial-gradient(70% 90% at 50% 0%,#241152,#0a0820)}
+.dir--cosmic .sw{box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),0 0 18px rgba(0,0,0,.3)}
+
+/* starfield for cosmic spread */
+.starfield{position:absolute;inset:0;pointer-events:none;z-index:0}
+.starfield i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.5;box-shadow:0 0 6px #fff}
+
+/* =========================================================
+   DIRECTION 03 — PAPER CITRUS CO. (cut-paper craft)
+   ========================================================= */
+.dir--paper{
+  color:#2a3550;
+  background:
+    radial-gradient(60% 40% at 15% 0%, rgba(233,185,73,.3), transparent 70%),
+    radial-gradient(60% 40% at 90% 100%, rgba(46,139,139,.18), transparent 70%),
+    #f3e6cf;
+}
+.dir--paper .spread-num{color:#c0492b;opacity:.5}
+.dir--paper .spread-title{color:#20304a}
+.dir--paper .spread-tag{color:#c0492b}
+.dir--paper .spread-philosophy{color:#445069}
+.dir--paper .panel{background:#fbf1de;box-shadow:0 12px 0 -4px rgba(32,48,74,.10),0 22px 30px rgba(32,48,74,.16);border:0}
+.dir--paper .panel::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+  background-image:radial-gradient(rgba(192,73,43,.12) 1px,transparent 1.4px);background-size:7px 7px}
+.dir--paper .panel h4{color:#b06a2c}
+.dir--paper .hero{background:
+  radial-gradient(60% 60% at 50% 50%, #fdf4e2, #f0e0c4)}
+.dir--paper .type-disp{font-family:"Baloo 2";font-weight:800;color:#20304a}
+.dir--paper .type-body{font-family:"Nunito";color:#445069}
+.dir--paper .btn{background:#e2622b;color:#fff;box-shadow:0 5px 0 #b8431a,0 12px 16px rgba(192,73,43,.25)}
+.dir--paper .btn.ghost{background:#e9dcc2;color:#7a5a36;box-shadow:0 5px 0 #cdbb98}
+.dir--paper .node-disc{background:#e9b949;box-shadow:0 5px 0 #c9971f,0 12px 16px rgba(120,80,20,.2);border:3px solid #fbf1de}
+.dir--paper .node-label{color:#20304a}
+.dir--paper .bar-track{background:#e6d7ba;box-shadow:inset 0 1px 2px rgba(120,80,20,.2)}
+.dir--paper .bar-row{color:#445069}
+.dir--paper .banner{background:#fbf1de;color:#20304a;box-shadow:0 5px 0 -1px rgba(32,48,74,.1),0 12px 16px rgba(32,48,74,.14)}
+.dir--paper .note{background:#fbf1de;box-shadow:0 6px 0 -2px rgba(32,48,74,.08),0 12px 16px rgba(32,48,74,.12)}
+.dir--paper .note h5{color:#20304a}
+.dir--paper .note li::before{background:#e2622b}
+.dir--paper .finish{background:#fbf1de;color:#445069;box-shadow:0 6px 0 -2px rgba(32,48,74,.08)}
+.dir--paper .journey{background:#cfe0c2}
+.dir--paper .sw{box-shadow:0 4px 0 -1px rgba(32,48,74,.14),inset 0 0 0 1px rgba(32,48,74,.06)}
+
+/* ============ COMPARISON FOOTER ============ */
+.compare{padding:70px 0 90px;background:linear-gradient(180deg,#160f2c,#0c0a16);text-align:center}
+.compare h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(28px,4vw,40px);margin-bottom:10px}
+.compare .lede{max-width:640px;margin:0 auto 38px;color:rgba(255,255,255,.72);font-size:16px;line-height:1.6}
+.cmp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;text-align:left}
+@media(max-width:820px){.cmp-grid{grid-template-columns:1fr}}
+.cmp-card{border-radius:22px;padding:24px;position:relative;overflow:hidden}
+.cmp-card .pip{width:120px;display:block;margin:0 auto 6px}
+.cmp-card h3{font-family:"Baloo 2";font-size:20px;font-weight:800;text-align:center;margin-bottom:6px}
+.cmp-card .mood{text-align:center;font-size:13px;opacity:.85;margin-bottom:14px;min-height:34px}
+.cmp-card .meter{font-size:12px;font-weight:800;margin:9px 0 3px;display:flex;justify-content:space-between}
+.cmp-card .mtrack{height:7px;border-radius:999px;background:rgba(255,255,255,.14);overflow:hidden}
+.cmp-card .mfill{height:100%;border-radius:999px}
+.cmp-c1{background:linear-gradient(180deg,#fff3df,#ffe3c2);color:#5a3a1a}
+.cmp-c1 .mfill{background:#ff8c1a}
+.cmp-c2{background:linear-gradient(180deg,#140a2c,#0c0820);color:#eaf2ff;box-shadow:inset 0 0 0 1px rgba(140,160,255,.2)}
+.cmp-c2 .mtrack{background:rgba(255,255,255,.1)}
+.cmp-c2 .mfill{background:linear-gradient(90deg,#ff7a18,#ff2e93)}
+.cmp-c3{background:#fbf1de;color:#2a3550;box-shadow:0 8px 0 -2px rgba(0,0,0,.25)}
+.cmp-c3 .mtrack{background:#e6d7ba}
+.cmp-c3 .mfill{background:#e2622b}
+.howto{max-width:720px;margin:42px auto 0;padding:22px 24px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);text-align:left;font-size:15px;line-height:1.65;color:rgba(255,255,255,.85)}
+.howto b{color:#ffcb6b}
+.pip-body{transform-origin:center;animation:bob 3s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.pip-orbit{transform-origin:center;animation:spin 14s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<!-- ===================== COVER ===================== -->
+<header class="cover">
+  <div class="wrap">
+    <div class="kicker">Orenj · creative exploration</div>
+    <h1>Three ways to dress <span class="o">Orenj</span></h1>
+    <p class="lede">Same heart — a warm, gamified gym where you learn to explain anything to anyone, guided by Pip. Three distinct skins for how it could <em>look and feel</em>. Pick one, or tell me to blend them.</p>
+
+    <div class="cover-pips" id="cover-pips"></div>
+
+    <div class="dna">
+      <span>Keep: <b>Pip</b>, the citrus guide</span>
+      <span>Keep: <b>orange-forward</b> warmth</span>
+      <span>Keep: a <b>journey</b> through worlds</span>
+      <span>Keep: <b>gamified</b> rings, stars, confetti</span>
+      <span>Keep: <b>100% vector</b>, no stock art</span>
+      <span>Keep: the <b>encouraging coach</b> voice</span>
+    </div>
+    <div class="scrollhint">↓ scroll through the three directions</div>
+  </div>
+</header>
+
+<!-- ===================== 01 STORYBOOK ===================== -->
+<section class="spread dir--storybook">
+  <div class="wrap">
+    <div class="spread-head">
+      <span class="spread-num">01</span>
+      <div>
+        <h2 class="spread-title">Sunlit Storybook</h2>
+        <p class="spread-tag">“The cozy picture-book, lovingly painted.”</p>
+      </div>
+    </div>
+    <p class="spread-philosophy">A premium evolution of what Orenj already is. Think a hand-painted children's book crossed with Studio Ghibli warmth: gouache gradients, soft rim-light, paper grain, golden-hour skies. Pip gains real shading and a glow. Nothing is jarring — it's the current app, matured into something you'd want to frame. <b>Lowest risk, highest coziness.</b></p>
+
+    <div class="grid">
+      <div class="panel hero" id="sb-hero"></div>
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <div class="panel">
+          <h4>Palette · golden hour</h4>
+          <div class="swatches">
+            <div class="sw" style="background:#FFB54D;color:#5a3210">Honey<small>#FFB54D</small></div>
+            <div class="sw" style="background:#FF8C1A;color:#3a1d00">Marmalade<small>#FF8C1A</small></div>
+            <div class="sw" style="background:#E07A8B;color:#fff">Dusty Rose<small>#E07A8B</small></div>
+            <div class="sw" style="background:#9FC6A0;color:#173a1c">Sage Mist<small>#9FC6A0</small></div>
+            <div class="sw" style="background:#FBF0DC;color:#7a5a30">Cream Paper<small>#FBF0DC</small></div>
+            <div class="sw" style="background:#7A4FB0;color:#fff">Plum<small>#7A4FB0</small></div>
+            <div class="sw" style="background:#FFCB3D;color:#5a3210">Gold Star<small>#FFCB3D</small></div>
+            <div class="sw" style="background:#241733;color:#fff">Deep Fig<small>#241733</small></div>
+          </div>
+        </div>
+        <div class="panel">
+          <h4>Type · elegant + rounded</h4>
+          <div class="type-row">
+            <div class="type-disp">Explain an orange.</div>
+            <div class="type-body">Fraunces sets the headlines with bookish warmth; Nunito keeps the body soft and readable. Baloo 2 stays for buttons and badges.</div>
+            <div class="type-meta">Fraunces · Nunito · Baloo 2</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:22px">
+      <h4>The chrome, in this skin</h4>
+      <div class="comp-grid">
+        <button class="btn">Show Pip ✨</button>
+        <button class="btn ghost">Try again</button>
+        <div class="node"><div class="node-disc">🍊</div><div class="node-label">Explain an orange</div></div>
+        <div class="ring-wrap"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="#efe0c6" stroke-width="12"/><circle cx="60" cy="60" r="52" fill="none" stroke="#3fbf63" stroke-width="12" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="62"/></svg><div class="ring-num" style="color:#6a3a14">81</div></div>
+        <div class="bars">
+          <div class="bar-row"><span>Analogy</span><div class="bar-track"><div class="bar-fill" style="width:88%;background:#ff8c1a"></div></div><span>88</span></div>
+          <div class="bar-row"><span>Perspective</span><div class="bar-track"><div class="bar-fill" style="width:74%;background:#9d6bff"></div></div><span>74</span></div>
+          <div class="bar-row"><span>Concreteness</span><div class="bar-track"><div class="bar-fill" style="width:69%;background:#4cc4ff"></div></div><span>69</span></div>
+        </div>
+        <div class="banner"><div class="b-emoji">🛸</div><div class="b-name">First Contact</div><div class="b-sub">Explain everyday wonders to a curious alien</div></div>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:22px">
+      <div class="panel">
+        <h4>Audience character · a "swirling idea"</h4>
+        <div style="display:flex;justify-content:center" id="sb-aud"></div>
+      </div>
+      <div class="panel">
+        <h4>The journey, painted</h4>
+        <div class="journey" id="sb-journey"></div>
+      </div>
+    </div>
+
+    <div class="notes">
+      <div class="note"><h5>🟢 Keeps</h5><ul><li>Every screen & flow exactly as-is</li><li>The cosmos→meadow journey gradient</li><li>Pip's silhouette and cast</li></ul></div>
+      <div class="note"><h5>✨ Evolves</h5><ul><li>Flat fills → painted, multi-light shading</li><li>Real rim-light, soft shadows, glow</li><li>Stronger paper/canvas texture</li></ul></div>
+      <div class="note"><h5>➕ New</h5><ul><li>Golden-hour vignettes per chapter</li><li>Hand-lettered chapter titles</li><li>Tiny painted props Pip can hold</li></ul></div>
+    </div>
+    <div class="finish"><b>Finish & texture:</b> watercolor edges, visible paper tooth, warm vignettes, subsurface glow on Pip. Feels tactile, handmade, and heartfelt — a bedtime-story you happen to learn from.</div>
+  </div>
+</section>
+
+<!-- ===================== 02 COSMIC CITRUS ===================== -->
+<section class="spread dir--cosmic">
+  <div class="starfield" id="cosmic-stars"></div>
+  <div class="wrap" style="position:relative;z-index:1">
+    <div class="spread-head">
+      <span class="spread-num">02</span>
+      <div>
+        <h2 class="spread-title">Cosmic Citrus</h2>
+        <p class="spread-tag">“Electric, glowing, dopamine on tap.”</p>
+      </div>
+    </div>
+    <p class="spread-philosophy">Bold and energetic. Deep-space navy, neon citrus, holographic gradients, bloom and glass. Pip becomes a little luminous sun-sprite trailing sparks. This leans hard into the game-y dopamine — rings pulse, buttons glow, particles drift. It reads modern, premium, and exciting — closer to a flagship mobile game than an app. <b>Highest energy, most distinctive screenshot.</b></p>
+
+    <div class="grid">
+      <div class="panel hero" id="co-hero"></div>
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <div class="panel">
+          <h4>Palette · neon nebula</h4>
+          <div class="swatches">
+            <div class="sw" style="background:#FF7A18;color:#2a1000">Plasma<small>#FF7A18</small></div>
+            <div class="sw" style="background:#FFB020;color:#3a2400">Solar Flare<small>#FFB020</small></div>
+            <div class="sw" style="background:#FF2E93;color:#fff">Hot Magenta<small>#FF2E93</small></div>
+            <div class="sw" style="background:#22E0FF;color:#04303a">Cyber Cyan<small>#22E0FF</small></div>
+            <div class="sw" style="background:#8B5CFF;color:#fff">Ultraviolet<small>#8B5CFF</small></div>
+            <div class="sw" style="background:#0A0820;color:#9fb4ff">Void Navy<small>#0A0820</small></div>
+            <div class="sw" style="background:#140B33;color:#9fb4ff">Deep Space<small>#140B33</small></div>
+            <div class="sw" style="background:#EAF4FF;color:#0a0820">Star White<small>#EAF4FF</small></div>
+          </div>
+        </div>
+        <div class="panel">
+          <h4>Type · geometric + bright</h4>
+          <div class="type-row">
+            <div class="type-disp">Explain a dream.</div>
+            <div class="type-body">A switch to geometric sans — Sora for display, Space Grotesk for body — gives it that sleek, techy, sci-fi confidence. Numbers and stats glow.</div>
+            <div class="type-meta">Sora · Space Grotesk</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:22px">
+      <h4>The chrome, in this skin</h4>
+      <div class="comp-grid">
+        <button class="btn">Show Pip ✨</button>
+        <button class="btn ghost">Try again</button>
+        <div class="node"><div class="node-disc">🍊</div><div class="node-label">Explain an orange</div></div>
+        <div class="ring-wrap"><svg viewBox="0 0 120 120"><defs><linearGradient id="coRingGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#22E0FF"/><stop offset="100%" stop-color="#FF2E93"/></linearGradient></defs><circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="12"/><circle cx="60" cy="60" r="52" fill="none" stroke="url(#coRingGrad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="62" style="filter:drop-shadow(0 0 6px #22e0ff)"/></svg><div class="ring-num" style="color:#fff">81</div></div>
+        <div class="bars">
+          <div class="bar-row"><span>Analogy</span><div class="bar-track"><div class="bar-fill" style="width:88%;background:linear-gradient(90deg,#ff7a18,#ffb020)"></div></div><span>88</span></div>
+          <div class="bar-row"><span>Perspective</span><div class="bar-track"><div class="bar-fill" style="width:74%;background:linear-gradient(90deg,#8b5cff,#ff2e93)"></div></div><span>74</span></div>
+          <div class="bar-row"><span>Concreteness</span><div class="bar-track"><div class="bar-fill" style="width:69%;background:linear-gradient(90deg,#22e0ff,#8b5cff)"></div></div><span>69</span></div>
+        </div>
+        <div class="banner"><div class="b-emoji">🛸</div><div class="b-name">First Contact</div><div class="b-sub">Explain everyday wonders to a curious alien</div></div>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:22px">
+      <div class="panel">
+        <h4>Audience character · a "swirling idea"</h4>
+        <div style="display:flex;justify-content:center" id="co-aud"></div>
+      </div>
+      <div class="panel">
+        <h4>The journey, as a constellation</h4>
+        <div class="journey" id="co-journey"></div>
+      </div>
+    </div>
+
+    <div class="notes">
+      <div class="note"><h5>🟢 Keeps</h5><ul><li>Pip's shape, sprout & big eyes</li><li>The night-sky top of the journey</li><li>Orange as the hero hue</li></ul></div>
+      <div class="note"><h5>✨ Evolves</h5><ul><li>Warm paper → deep-space glass</li><li>Soft shadows → neon bloom & glow</li><li>Path → glowing constellation lines</li></ul></div>
+      <div class="note"><h5>➕ New</h5><ul><li>Particle trails & drifting dust</li><li>Holographic, animated gradients</li><li>Glassmorphic cards over the void</li></ul></div>
+    </div>
+    <div class="finish"><b>Finish & texture:</b> bloom/glow, glass blur, scanline shimmer, chromatic sparkle. Reads as a flagship game. Watch contrast for accessibility, and keep glow tasteful so text stays crisp.</div>
+  </div>
+</section>
+
+<!-- ===================== 03 PAPER CITRUS CO. ===================== -->
+<section class="spread dir--paper">
+  <div class="wrap">
+    <div class="spread-head">
+      <span class="spread-num">03</span>
+      <div>
+        <h2 class="spread-title">Paper Citrus Co.</h2>
+        <p class="spread-tag">“Hand-cut paper, stacked into a tiny world.”</p>
+      </div>
+    </div>
+    <p class="spread-philosophy">A tactile cut-paper / risograph world. Everything looks layered from colored construction paper with soft drop-shadows and a printed grain, like a diorama you could touch. It's the most design-forward and ownable look — calm, warm, and distinctive, in the spirit of boutique apps (Headspace, indie puzzle games). <b>Most unique brand, most "crafted by hand."</b></p>
+
+    <div class="grid">
+      <div class="panel hero" id="pp-hero"></div>
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <div class="panel">
+          <h4>Palette · riso print stock</h4>
+          <div class="swatches">
+            <div class="sw" style="background:#E2622B;color:#fff">Burnt Orange<small>#E2622B</small></div>
+            <div class="sw" style="background:#F08A5D;color:#5a2410">Coral Clay<small>#F08A5D</small></div>
+            <div class="sw" style="background:#E9B949;color:#5a3a00">Mustard<small>#E9B949</small></div>
+            <div class="sw" style="background:#2E8B8B;color:#fff">Teal Pulp<small>#2E8B8B</small></div>
+            <div class="sw" style="background:#8FAE77;color:#1c2e16">Sage Card<small>#8FAE77</small></div>
+            <div class="sw" style="background:#C0392B;color:#fff">Brick<small>#C0392B</small></div>
+            <div class="sw" style="background:#F6EBD9;color:#7a5a36">Cream Stock<small>#F6EBD9</small></div>
+            <div class="sw" style="background:#20304A;color:#fff">Ink Navy<small>#20304A</small></div>
+          </div>
+        </div>
+        <div class="panel">
+          <h4>Type · chunky + friendly</h4>
+          <div class="type-row">
+            <div class="type-disp">Explain a hug.</div>
+            <div class="type-body">Baloo 2 goes full display — rounded, confident, poster-like. Nunito Black for body keeps it grounded. Headlines can sit at slight, playful angles.</div>
+            <div class="type-meta">Baloo 2 · Nunito</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:22px">
+      <h4>The chrome, in this skin</h4>
+      <div class="comp-grid">
+        <button class="btn">Show Pip ✨</button>
+        <button class="btn ghost">Try again</button>
+        <div class="node"><div class="node-disc">🍊</div><div class="node-label">Explain an orange</div></div>
+        <div class="ring-wrap"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="#e6d7ba" stroke-width="13"/><circle cx="60" cy="60" r="52" fill="none" stroke="#2E8B8B" stroke-width="13" stroke-dasharray="326.7" stroke-dashoffset="62"/></svg><div class="ring-num" style="color:#20304a">81</div></div>
+        <div class="bars">
+          <div class="bar-row"><span>Analogy</span><div class="bar-track"><div class="bar-fill" style="width:88%;background:#e2622b"></div></div><span>88</span></div>
+          <div class="bar-row"><span>Perspective</span><div class="bar-track"><div class="bar-fill" style="width:74%;background:#2e8b8b"></div></div><span>74</span></div>
+          <div class="bar-row"><span>Concreteness</span><div class="bar-track"><div class="bar-fill" style="width:69%;background:#e9b949"></div></div><span>69</span></div>
+        </div>
+        <div class="banner"><div class="b-emoji">🛸</div><div class="b-name">First Contact</div><div class="b-sub">Explain everyday wonders to a curious alien</div></div>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:22px">
+      <div class="panel">
+        <h4>Audience character · a "swirling idea"</h4>
+        <div style="display:flex;justify-content:center" id="pp-aud"></div>
+      </div>
+      <div class="panel">
+        <h4>The journey, as a paper diorama</h4>
+        <div class="journey" id="pp-journey"></div>
+      </div>
+    </div>
+
+    <div class="notes">
+      <div class="note"><h5>🟢 Keeps</h5><ul><li>Pip, the cast, the journey idea</li><li>Warm citrus core palette</li><li>Playful, gentle personality</li></ul></div>
+      <div class="note"><h5>✨ Evolves</h5><ul><li>Gradients → flat paper + hard light</li><li>Glow → layered drop-shadow depth</li><li>Film grain → halftone riso print</li></ul></div>
+      <div class="note"><h5>➕ New</h5><ul><li>Off-register "misprint" accents</li><li>Torn/cut paper edges</li><li>Felt, cardboard & tape textures</li></ul></div>
+    </div>
+    <div class="finish"><b>Finish & texture:</b> matte paper, halftone dots, soft stacked shadows, a 1–2px color misregistration. Endlessly ownable and merch-ready, with a calm, grown-up-but-playful confidence.</div>
+  </div>
+</section>
+
+<!-- ===================== COMPARISON ===================== -->
+<section class="compare">
+  <div class="wrap">
+    <h2>Same Pip, three souls</h2>
+    <p class="lede">Here's the mascot in each world, side by side, with where each direction sits on a few axes.</p>
+    <div class="cmp-grid">
+      <div class="cmp-card cmp-c1">
+        <div id="cmp-sb"></div>
+        <h3>01 · Sunlit Storybook</h3>
+        <div class="mood">Cozy, painterly, heartfelt</div>
+        <div class="meter"><span>Coziness</span><span>Very high</span></div><div class="mtrack"><div class="mfill" style="width:96%"></div></div>
+        <div class="meter"><span>Distinctiveness</span><span>Medium</span></div><div class="mtrack"><div class="mfill" style="width:55%"></div></div>
+        <div class="meter"><span>Build effort</span><span>Low</span></div><div class="mtrack"><div class="mfill" style="width:35%"></div></div>
+      </div>
+      <div class="cmp-card cmp-c2">
+        <div id="cmp-co"></div>
+        <h3>02 · Cosmic Citrus</h3>
+        <div class="mood">Electric, premium, game-y</div>
+        <div class="meter"><span>Energy</span><span>Very high</span></div><div class="mtrack"><div class="mfill" style="width:98%"></div></div>
+        <div class="meter"><span>Distinctiveness</span><span>High</span></div><div class="mtrack"><div class="mfill" style="width:80%"></div></div>
+        <div class="meter"><span>Build effort</span><span>Medium-high</span></div><div class="mtrack"><div class="mfill" style="width:72%"></div></div>
+      </div>
+      <div class="cmp-card cmp-c3">
+        <div id="cmp-pp"></div>
+        <h3>03 · Paper Citrus Co.</h3>
+        <div class="mood">Tactile, ownable, calm-playful</div>
+        <div class="meter"><span>Uniqueness</span><span>Very high</span></div><div class="mtrack"><div class="mfill" style="width:94%"></div></div>
+        <div class="meter"><span>Distinctiveness</span><span>Very high</span></div><div class="mtrack"><div class="mfill" style="width:92%"></div></div>
+        <div class="meter"><span>Build effort</span><span>Medium</span></div><div class="mtrack"><div class="mfill" style="width:58%"></div></div>
+      </div>
+    </div>
+
+    <div class="howto">
+      <b>How to choose →</b> Tell me which number speaks to you (or mix — e.g. “Storybook Pip but the Cosmic journey map”). Once you pick, I'll build a full interactive style demo of one real Orenj screen in that direction, then roll it across the whole app — new <b>art.js</b> mascot + characters and a refreshed <b>style.css</b>, all still hand-built vector with no stock images.
+    </div>
+  </div>
+</section>
+
+<script>
+/* ---------- Pip, drawn three ways (same soul) ---------- */
+function pipStorybook(){return `
+<svg class="pip" viewBox="0 0 200 232" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <radialGradient id="sbBody" cx="36%" cy="30%" r="82%">
+    <stop offset="0%" stop-color="#FFE7B8"/><stop offset="35%" stop-color="#FFB54D"/>
+    <stop offset="72%" stop-color="#F4881F"/><stop offset="100%" stop-color="#D95E0E"/></radialGradient>
+  <radialGradient id="sbCheek" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF8FA0"/><stop offset="100%" stop-color="#FF8FA0" stop-opacity="0"/></radialGradient>
+  <linearGradient id="sbLeaf" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#A7E26B"/><stop offset="100%" stop-color="#3E9B45"/></linearGradient>
+  <radialGradient id="sbHi" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff" stop-opacity=".92"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></radialGradient>
+  <filter id="sbSoft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+ </defs>
+ <ellipse cx="100" cy="216" rx="56" ry="11" fill="#3a1f08" opacity=".22" filter="url(#sbSoft)"/>
+ <g class="pip-body">
+   <path d="M100 42 C95 12 74 10 66 19 C82 21 90 32 96 48Z" fill="url(#sbLeaf)"/>
+   <path d="M100 44 C106 14 128 11 136 21 C118 23 110 34 104 50Z" fill="url(#sbLeaf)"/>
+   <path d="M86 24 q7 9 11 21" stroke="#2f7a37" stroke-width="2" fill="none" opacity=".5"/>
+   <rect x="95" y="40" width="9" height="22" rx="4.5" fill="#3f7d2f"/>
+   <circle cx="100" cy="122" r="82" fill="url(#sbBody)"/>
+   <ellipse cx="100" cy="170" rx="74" ry="46" fill="#bf4f08" opacity=".26" filter="url(#sbSoft)"/>
+   <path d="M30 100 a72 72 0 0 1 58 -56" stroke="#FFEFC2" stroke-width="6" fill="none" opacity=".7" stroke-linecap="round"/>
+   <ellipse cx="68" cy="80" rx="30" ry="22" fill="url(#sbHi)"/>
+   <g fill="#d9670c" opacity=".22"><circle cx="58" cy="152" r="3"/><circle cx="142" cy="152" r="3"/><circle cx="100" cy="184" r="3"/></g>
+   <path d="M26 136 q-20 6 -22 30 q16 -8 30 -12Z" fill="#ef7a00"/>
+   <path d="M174 136 q20 6 22 30 q-16 -8 -30 -12Z" fill="#ef7a00"/>
+   <ellipse cx="74" cy="202" rx="17" ry="10" fill="#cf5d00"/><ellipse cx="126" cy="202" rx="17" ry="10" fill="#cf5d00"/>
+   <ellipse cx="58" cy="128" rx="16" ry="11" fill="url(#sbCheek)"/><ellipse cx="142" cy="128" rx="16" ry="11" fill="url(#sbCheek)"/>
+   <ellipse cx="76" cy="108" rx="15" ry="18" fill="#fffdf7"/><ellipse cx="124" cy="108" rx="15" ry="18" fill="#fffdf7"/>
+   <circle cx="78" cy="110" r="8.5" fill="#3a2412"/><circle cx="126" cy="110" r="8.5" fill="#3a2412"/>
+   <circle cx="81" cy="106" r="3" fill="#fff"/><circle cx="129" cy="106" r="3" fill="#fff"/>
+   <path d="M80 140 q20 22 40 0" stroke="#7a2e1e" stroke-width="6" fill="none" stroke-linecap="round"/>
+ </g>
+</svg>`}
+
+function pipCosmic(){return `
+<svg class="pip" viewBox="0 0 230 244" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <radialGradient id="coBody" cx="40%" cy="33%" r="74%">
+    <stop offset="0%" stop-color="#FFF6E0"/><stop offset="28%" stop-color="#FFC24D"/>
+    <stop offset="62%" stop-color="#FF6A1A"/><stop offset="100%" stop-color="#FF2E93"/></radialGradient>
+  <radialGradient id="coGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FF8A2A" stop-opacity=".95"/><stop offset="100%" stop-color="#FF8A2A" stop-opacity="0"/></radialGradient>
+  <linearGradient id="coRing2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#22E0FF"/><stop offset="50%" stop-color="#8B5CFF"/><stop offset="100%" stop-color="#FF2E93"/></linearGradient>
+  <linearGradient id="coLeaf" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7CFFB0"/><stop offset="100%" stop-color="#22E0FF"/></linearGradient>
+  <filter id="coBlur" x="-90%" y="-90%" width="280%" height="280%"><feGaussianBlur stdDeviation="7"/></filter>
+ </defs>
+ <circle cx="115" cy="128" r="94" fill="url(#coGlow)" filter="url(#coBlur)" opacity=".75"/>
+ <g class="pip-orbit"><ellipse cx="115" cy="128" rx="108" ry="46" fill="none" stroke="url(#coRing2)" stroke-width="2.5" opacity=".75" stroke-dasharray="3 9" transform="rotate(-18 115 128)"/></g>
+ <g class="pip-body">
+   <path d="M115 48 C109 16 89 14 81 24 C97 26 105 38 111 54Z" fill="url(#coLeaf)"/>
+   <path d="M115 50 C121 18 143 15 151 26 C133 28 125 40 119 56Z" fill="url(#coLeaf)"/>
+   <circle cx="115" cy="128" r="80" fill="url(#coBody)"/>
+   <circle cx="115" cy="128" r="80" fill="none" stroke="#fff" stroke-width="3" opacity=".85" filter="url(#coBlur)"/>
+   <circle cx="115" cy="128" r="80" fill="none" stroke="#22E0FF" stroke-width="1.6" opacity=".9"/>
+   <ellipse cx="89" cy="94" rx="26" ry="20" fill="#fff" opacity=".5" filter="url(#coBlur)"/>
+   <ellipse cx="91" cy="116" rx="14" ry="17" fill="#06121f"/><ellipse cx="139" cy="116" rx="14" ry="17" fill="#06121f"/>
+   <circle cx="93" cy="114" r="7" fill="#9FF4FF" filter="url(#coBlur)"/><circle cx="141" cy="114" r="7" fill="#9FF4FF" filter="url(#coBlur)"/>
+   <circle cx="93" cy="114" r="6" fill="#dffaff"/><circle cx="141" cy="114" r="6" fill="#dffaff"/>
+   <circle cx="95" cy="111" r="2.6" fill="#fff"/><circle cx="143" cy="111" r="2.6" fill="#fff"/>
+   <path d="M93 146 q22 20 44 0" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/>
+ </g>
+ <g fill="#fff"><path d="M40 74 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3Z"/><path d="M196 100 l2.5 6 6 2.5 -6 2.5 -2.5 6 -2.5 -6 -6 -2.5 6 -2.5Z"/><circle cx="30" cy="150" r="2"/><circle cx="205" cy="58" r="2"/></g>
+</svg>`}
+
+function pipPaper(){return `
+<svg class="pip" viewBox="0 0 214 234" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <filter id="ppSh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#1c2740" flood-opacity=".22"/></filter>
+  <filter id="ppShSm" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="1.6" flood-color="#1c2740" flood-opacity=".25"/></filter>
+  <clipPath id="ppBody"><circle cx="107" cy="122" r="80"/></clipPath>
+ </defs>
+ <ellipse cx="107" cy="212" rx="60" ry="12" fill="#dcc096"/>
+ <circle cx="102" cy="122" r="80" fill="#FF5DA0" opacity=".22"/>
+ <g class="pip-body">
+   <g filter="url(#ppShSm)"><path d="M107 44 C101 16 80 14 72 23 C88 25 96 36 102 50Z" fill="#6FA84F"/></g>
+   <g filter="url(#ppShSm)"><path d="M107 46 C113 18 135 15 143 25 C125 27 117 38 111 52Z" fill="#5C9440"/></g>
+   <rect x="102" y="42" width="9" height="20" rx="4" fill="#4E8B3A"/>
+   <g filter="url(#ppSh)"><circle cx="107" cy="122" r="80" fill="#E2622B"/></g>
+   <g clip-path="url(#ppBody)">
+     <circle cx="78" cy="86" r="62" fill="#F19A63"/>
+     <circle cx="146" cy="172" r="66" fill="#C84E1E"/>
+     <g fill="#C84E1E" opacity=".35"><circle cx="64" cy="150" r="3"/><circle cx="150" cy="150" r="3"/><circle cx="107" cy="178" r="3"/><circle cx="58" cy="112" r="3"/></g>
+   </g>
+   <circle cx="60" cy="130" r="11" fill="#EE6F6F"/><circle cx="154" cy="130" r="11" fill="#EE6F6F"/>
+   <g filter="url(#ppShSm)">
+     <ellipse cx="83" cy="112" rx="11" ry="14" fill="#20304A"/><ellipse cx="131" cy="112" rx="11" ry="14" fill="#20304A"/>
+   </g>
+   <circle cx="86" cy="108" r="3.2" fill="#fbf1de"/><circle cx="134" cy="108" r="3.2" fill="#fbf1de"/>
+   <path d="M88 144 q19 18 38 0 q-19 9 -38 0Z" fill="#20304A"/>
+ </g>
+</svg>`}
+
+/* ---------- audience "idea orb", three ways ---------- */
+function audStorybook(){return `
+<svg width="170" height="170" viewBox="0 0 200 200">
+ <defs><radialGradient id="asB" cx="50%" cy="42%" r="70%"><stop offset="0%" stop-color="#4a2c7a"/><stop offset="100%" stop-color="#1c1030"/></radialGradient></defs>
+ <circle cx="100" cy="100" r="96" fill="#2a1750"/>
+ <circle cx="100" cy="100" r="92" fill="url(#asB)"/>
+ <g fill="none" stroke-linecap="round"><path d="M100 100 m-56 0 a56 56 0 1 1 112 0" stroke="#ff8c1a" stroke-width="7" opacity=".9"/><path d="M100 100 m-36 0 a36 36 0 1 0 72 0" stroke="#c79bff" stroke-width="7" opacity=".9"/><path d="M100 100 m-17 0 a17 17 0 1 1 34 0" stroke="#6fd3ff" stroke-width="7"/></g>
+ <circle cx="100" cy="100" r="5" fill="#fff"/>
+ <g fill="#fff" opacity=".85"><circle cx="46" cy="58" r="1.8"/><circle cx="158" cy="142" r="2"/><circle cx="150" cy="50" r="1.5"/></g>
+ <circle cx="100" cy="100" r="92" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="3"/>
+</svg>`}
+function audCosmic(){return `
+<svg width="170" height="170" viewBox="0 0 200 200">
+ <defs><radialGradient id="acB" cx="50%" cy="45%" r="70%"><stop offset="0%" stop-color="#241152"/><stop offset="100%" stop-color="#070418"/></radialGradient>
+ <filter id="acG" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter></defs>
+ <circle cx="100" cy="100" r="96" fill="#0a0820"/>
+ <circle cx="100" cy="100" r="92" fill="url(#acB)"/>
+ <g fill="none" stroke-linecap="round" filter="url(#acG)"><path d="M100 100 m-56 0 a56 56 0 1 1 112 0" stroke="#ff7a18" stroke-width="6"/><path d="M100 100 m-36 0 a36 36 0 1 0 72 0" stroke="#ff2e93" stroke-width="6"/><path d="M100 100 m-17 0 a17 17 0 1 1 34 0" stroke="#22e0ff" stroke-width="6"/></g>
+ <g fill="none" stroke-linecap="round"><path d="M100 100 m-56 0 a56 56 0 1 1 112 0" stroke="#ffb86a" stroke-width="2.4"/><path d="M100 100 m-36 0 a36 36 0 1 0 72 0" stroke="#ff8ac4" stroke-width="2.4"/><path d="M100 100 m-17 0 a17 17 0 1 1 34 0" stroke="#bff4ff" stroke-width="2.4"/></g>
+ <circle cx="100" cy="100" r="5" fill="#fff" filter="url(#acG)"/><circle cx="100" cy="100" r="3" fill="#fff"/>
+ <g fill="#fff"><circle cx="46" cy="58" r="1.8"/><circle cx="158" cy="142" r="2"/></g>
+ <circle cx="100" cy="100" r="92" fill="none" stroke="rgba(34,224,255,.55)" stroke-width="2"/>
+</svg>`}
+function audPaper(){return `
+<svg width="170" height="170" viewBox="0 0 200 200">
+ <defs><filter id="apS" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="2.5" flood-color="#1c2740" flood-opacity=".25"/></filter></defs>
+ <g filter="url(#apS)"><circle cx="100" cy="100" r="92" fill="#20304A"/></g>
+ <g filter="url(#apS)"><circle cx="100" cy="100" r="74" fill="#E2622B"/></g>
+ <g filter="url(#apS)"><circle cx="100" cy="100" r="54" fill="#F6EBD9"/></g>
+ <g filter="url(#apS)"><circle cx="100" cy="100" r="34" fill="#2E8B8B"/></g>
+ <g filter="url(#apS)"><circle cx="100" cy="100" r="15" fill="#E9B949"/></g>
+ <g fill="#20304A" opacity=".25"><circle cx="100" cy="100" r="92" fill="none"/></g>
+ <g fill="#C84E1E" opacity=".4"><circle cx="64" cy="64" r="2.5"/><circle cx="140" cy="138" r="2.5"/></g>
+</svg>`}
+
+/* ---------- mini journey strips ---------- */
+function journey(style){
+  const pts=[[30,30],[68,80],[34,130],[70,182]];
+  const d="M "+pts.map(p=>p[0]+" "+p[1]).join(" L ");
+  let stroke,nodeStyle,extra="";
+  if(style==="sb"){stroke="rgba(255,255,255,.6)";nodeStyle=["#9fd06f","#ffcb3d","#fff6dd","#e8e2d0"];}
+  if(style==="co"){stroke="#5cf0ff";extra=`<filter id="jg"><feGaussianBlur stdDeviation="2"/></filter>`;nodeStyle=["#22e0ff","#ffb020","#fff","#3a2c66"];}
+  if(style==="pp"){stroke="#8FAE77";nodeStyle=["#2E8B8B","#E9B949","#E2622B","#cbb896"];}
+  const glow = style==="co" ? 'filter="url(#jg)" ' : '';
+  let svg=`<svg class="path" viewBox="0 0 100 212" preserveAspectRatio="none"><defs>${extra}</defs>
+    <path d="${d}" fill="none" ${glow}stroke="${stroke}" stroke-width="${style==='co'?3:2}" stroke-linecap="round" stroke-dasharray="${style==='pp'?'1 6':'2 9'}" vector-effect="non-scaling-stroke"/></svg>`;
+  const labels=["done","done","next","locked"];
+  const emoji=["✓","✓","🍊","🔒"];
+  let nodes="";
+  pts.forEach((p,i)=>{
+    let bg=nodeStyle[i], extra2="";
+    if(style==="co"&&labels[i]==="next") extra2="box-shadow:0 0 18px #ff7a18,0 0 0 3px rgba(255,176,32,.3)";
+    if(style==="co") extra2 += ";color:#06121f";
+    if(style==="sb"&&labels[i]==="next") extra2="box-shadow:0 0 0 6px rgba(255,203,61,.4),0 8px 14px rgba(0,0,0,.3);border:3px solid #fff";
+    if(style==="pp") extra2="box-shadow:0 4px 0 rgba(32,48,74,.35);border:3px solid #fbf1de";
+    nodes+=`<div class="jnode" style="left:${p[0]}%;top:${p[1]/212*100}%;background:${bg};${extra2}">${emoji[i]}</div>`;
+  });
+  return svg+nodes;
+}
+
+/* ---------- mount everything ---------- */
+document.getElementById('cover-pips').innerHTML = pipStorybook()+pipCosmic()+pipPaper();
+document.getElementById('sb-hero').innerHTML = pipStorybook();
+document.getElementById('co-hero').innerHTML = pipCosmic();
+document.getElementById('pp-hero').innerHTML = pipPaper();
+document.getElementById('sb-aud').innerHTML = audStorybook();
+document.getElementById('co-aud').innerHTML = audCosmic();
+document.getElementById('pp-aud').innerHTML = audPaper();
+document.getElementById('sb-journey').innerHTML = journey('sb');
+document.getElementById('co-journey').innerHTML = journey('co');
+document.getElementById('pp-journey').innerHTML = journey('pp');
+document.getElementById('cmp-sb').innerHTML = pipStorybook();
+document.getElementById('cmp-co').innerHTML = pipCosmic();
+document.getElementById('cmp-pp').innerHTML = pipPaper();
+
+/* starfield */
+(function(){let s="";for(let i=0;i<90;i++){s+=`<i style="left:${(Math.random()*100).toFixed(1)}%;top:${(Math.random()*100).toFixed(1)}%;opacity:${(0.2+Math.random()*0.6).toFixed(2)};width:${(Math.random()<.2?3:2)}px;height:${(Math.random()<.2?3:2)}px"></i>`;}
+document.getElementById('cosmic-stars').innerHTML=s;})();
+</script>
+</body>
+</html>
