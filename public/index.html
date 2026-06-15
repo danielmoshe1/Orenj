@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Orenj — Make it impossible to misunderstand</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="receiver.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍊</text></svg>" />
+</head>
+<body>
+  <div class="grain"></div>
+
+  <header class="topbar">
+    <div class="brand" id="brand-home" role="button" tabindex="0">
+      <span class="brand-mark">🍊</span>
+      <span class="brand-name">Orenj</span>
+    </div>
+    <div class="stats">
+      <div class="stat" title="Rounds solved"><span class="stat-icon">✅</span><span id="stat-won">0</span></div>
+      <div class="stat" title="Current streak"><span class="stat-icon">🔥</span><span id="stat-streak">0</span></div>
+    </div>
+  </header>
+
+  <main id="app">
+
+    <!-- ============ HOME / LEVEL SELECT ============ -->
+    <section id="screen-home" class="screen active">
+      <div class="hero">
+        <div class="hero-pip" id="hero-pip"></div>
+        <h1 class="hero-title">Make it impossible to misunderstand.</h1>
+        <p class="hero-sub">
+          You get a secret word. Explain it. The <strong>Receiver</strong> tries to identify it —
+          by hunting for the strongest <em>wrong</em> thing your words could mean.
+          Revise until it can't misread you.
+        </p>
+      </div>
+      <div class="levels" id="levels"></div>
+      <p class="home-foot" id="home-foot"></p>
+    </section>
+
+    <!-- ============ ROUND ============ -->
+    <section id="screen-round" class="screen">
+      <button class="btn-back" id="btn-quit" aria-label="Back">←</button>
+
+      <div class="round-top">
+        <div class="round-level" id="round-level"></div>
+        <div class="tries" id="tries"></div>
+      </div>
+
+      <div class="secret-card">
+        <div class="secret-label">Your secret word</div>
+        <div class="secret-word" id="secret-word"></div>
+        <div class="secret-hint" id="secret-hint"></div>
+      </div>
+
+      <div class="receiver-stage">
+        <div class="receiver-pip" id="receiver-pip"></div>
+        <div class="receiver-bubble" id="receiver-bubble">
+          <p id="receiver-line">I'm listening… explain your word and I'll try to guess it.</p>
+          <p class="receiver-nudge" id="receiver-nudge" hidden></p>
+        </div>
+      </div>
+
+      <div class="round-card">
+        <div class="input-wrap">
+          <textarea id="explain-input" rows="5" placeholder="Explain your word so precisely that only it could fit. Close every door."></textarea>
+          <button class="mic-btn" id="btn-mic" type="button" aria-label="Dictate with your voice" title="Dictate with your voice">🎤</button>
+        </div>
+        <div class="round-foot">
+          <span class="wordcount" id="wordcount">0 words</span>
+          <button class="btn btn-primary" id="btn-send" disabled>Send to the Receiver →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RESULT ============ -->
+    <section id="screen-result" class="screen">
+      <div class="result-hero" id="result-hero">
+        <div class="result-pip" id="result-pip"></div>
+        <h2 id="result-headline"></h2>
+        <p id="result-tagline"></p>
+      </div>
+      <div class="result-card">
+        <div class="result-word" id="result-word"></div>
+        <div class="metrics" id="metrics"></div>
+        <div class="result-section" id="result-final-wrap">
+          <h3>The explanation that landed</h3>
+          <blockquote id="result-final"></blockquote>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-ghost" id="btn-replay">Replay this word</button>
+          <button class="btn btn-primary" id="btn-next">Next word →</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="/art.js"></script>
+  <script src="receiver.js"></script>
+</body>
+</html>

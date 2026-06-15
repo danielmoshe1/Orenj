@@ -1,0 +1,11 @@
+# Dependencies
+node_modules/
+
+# Secrets — never commit the API key
+.env
+server/.env
+*.local
+
+# Logs / OS cruft
+npm-debug.log*
+.DS_Store

@@ -1,0 +1,19 @@
+{
+  "name": "orenj-receiver-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend relay for Orenj — holds the Anthropic key and runs the AI Receiver.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.69.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2"
+  }
+}
